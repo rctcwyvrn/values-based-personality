@@ -1,8 +1,4 @@
-"""Flask app: rank your top values, get a personality reading.
 
-    flask --app app run --debug      # development
-    gunicorn -b 0.0.0.0:8000 wsgi:app  # production (see wsgi.py)
-"""
 
 from __future__ import annotations
 
