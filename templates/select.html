@@ -5,9 +5,10 @@
 <section class="intro">
   <h1>What matters most to you?</h1>
   <p>
-    Browse the {{ values|length }} values below and build your personal top
-    {{ max_picks }} — in order, with your single most important value first.
-    Click a value to add it; drag your picks to reorder them.
+    Browse the {{ values|length }} values and add everything that resonates —
+    as many as you like. Then narrow down to your top {{ max_picks }}: drag them
+    into order with your most important value first, and use the × buttons to
+    cut anything that doesn't make the final list.
   </p>
   {% if error %}<p class="error">{{ error }}</p>{% endif %}
 </section>
@@ -34,9 +35,12 @@
 
     <div class="picks-panel">
       <div class="panel-head">
-        <h2>Your top {{ max_picks }}</h2>
-        <span class="pick-count"><span id="pick-count">0</span>/{{ max_picks }}</span>
+        <h2>Your shortlist</h2>
+        <span class="pick-count"><span id="pick-count">0</span> / {{ max_picks }}</span>
       </div>
+      <p class="picks-hint" id="picks-hint">
+        Pick as many as resonate, then narrow to your top {{ max_picks }}.
+      </p>
       <ol class="picks-list" id="picks-list" data-max="{{ max_picks }}"
           data-initial="{{ (initial_ranked | default([])) | join(',') }}"
           aria-label="Your ranked values"></ol>
@@ -49,6 +53,75 @@
     </div>
   </div>
 </form>
+
+<section class="about" id="about">
+  <h2>What this test is</h2>
+  <p class="about-lead">
+    Most personality tests ask how you behave. This one starts from what you
+    care about. You rank the values that matter most to you, and the test
+    translates that ranking into a personality profile — one of
+    <a href="{{ url_for('types') }}">ten archetypes</a>, backed by a map of your
+    motivations. It rests on three well-established ideas from psychology, woven
+    together.
+  </p>
+
+  <div class="about-grid">
+    <article class="about-card">
+      <h3><span aria-hidden="true">🌱</span> ACT &amp; values</h3>
+      <p>
+        The {{ values|length }} values you rank come from
+        <strong>Acceptance and Commitment Therapy (ACT)</strong>, a modern,
+        evidence-based approach to psychological wellbeing. In ACT, values
+        aren't goals to tick off — they're freely chosen directions for how you
+        want to live: qualities like compassion, curiosity, or courage that you
+        can express in any moment. Starting here grounds the test in what
+        actually drives you, in plain human language.
+      </p>
+    </article>
+
+    <article class="about-card">
+      <h3><span aria-hidden="true">🧭</span> The Schwartz circumplex</h3>
+      <p>
+        Each value is mapped onto the <strong>Schwartz Theory of Basic Human
+        Values</strong> — ten universal motivations (from Self-Direction and
+        Achievement to Benevolence and Security) arranged in a circle. The
+        circle has structure: neighbouring motivations are compatible, opposite
+        ones conflict. Two axes organise it — <em>Openness to Change vs.
+        Conservation</em> and <em>Self-Transcendence vs. Self-Enhancement</em>.
+        This geometry is the engine of the test: it places you as a direction on
+        a compass, and can even detect when your values pull in tension.
+      </p>
+    </article>
+
+    <article class="about-card">
+      <h3><span aria-hidden="true">📊</span> The Big Five</h3>
+      <p>
+        The Schwartz map is precise but technical, so the test also speaks the
+        language of the <strong>Big Five (OCEAN)</strong> — Openness,
+        Conscientiousness, Extraversion, Agreeableness, and Emotional Stability
+        — the most validated model in personality science. Every value also
+        loads onto these five traits, so your result reads in familiar terms
+        (“high Openness, warm Agreeableness”) rather than jargon.
+      </p>
+    </article>
+  </div>
+
+  <h3 class="about-why-head">Why combine all three?</h3>
+  <p class="about-why">
+    Values and traits measure different things — <em>what you find important</em>
+    versus <em>how you typically behave</em> — but decades of research show they
+    line up in predictable ways. Combining them plays to each one's strength:
+    ACT supplies a rich, behaviour-oriented vocabulary of values; the Schwartz
+    circumplex supplies the geometry to turn a ranking into a coherent position
+    (and to spot inner tension); and the Big Five supplies the everyday language
+    to describe the person that position implies. The result is a reading that's
+    both grounded in what you genuinely care about and easy to recognise as you.
+  </p>
+  <p class="about-disclaimer">
+    This is a reflective tool for self-understanding — not a clinical or
+    diagnostic instrument.
+  </p>
+</section>
 {% endblock %}
 
 {% block scripts %}

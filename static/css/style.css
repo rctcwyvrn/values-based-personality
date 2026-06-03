@@ -98,6 +98,8 @@ a { color: var(--accent); }
 }
 .panel-head h2 { font-size: 1.05rem; margin: 0; }
 .pick-count { color: var(--ink-soft); font-variant-numeric: tabular-nums; }
+.pick-count.over { color: var(--warn); font-weight: 700; }
+.picks-hint { color: var(--ink-soft); font-size: 0.8rem; margin: 0 0 0.7rem; }
 
 #value-filter {
   background: var(--bg);
@@ -168,11 +170,42 @@ a { color: var(--accent); }
 }
 .pick-name { flex: 1; font-weight: 600; }
 .pick-remove {
-  background: none; border: none; color: var(--ink-soft);
-  font-size: 1.2rem; cursor: pointer; line-height: 1; padding: 0 0.2rem;
+  flex: 0 0 auto;
+  width: 1.7rem; height: 1.7rem;
+  display: grid; place-items: center;
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink-soft);
+  font-size: 1.15rem; line-height: 1; cursor: pointer;
+  transition: background 0.12s, color 0.12s, border-color 0.12s, transform 0.08s;
 }
-.pick-remove:hover { color: var(--danger); }
+.pick-remove:hover {
+  background: var(--danger); border-color: var(--danger); color: #fff;
+  transform: scale(1.08);
+}
 .picks-empty { color: var(--ink-soft); font-size: 0.85rem; }
+
+/* over-limit picks (beyond the top N) — staged for cutting */
+.pick-item.over-limit {
+  opacity: 0.62;
+  border-style: dashed;
+  background: transparent;
+}
+.pick-item.over-limit .pick-rank {
+  background: var(--bg-card);
+  color: var(--ink-soft);
+  border: 1px solid var(--line);
+}
+.cut-divider {
+  list-style: none;
+  text-align: center;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--warn);
+  margin: 0.3rem 0 0.5rem;
+}
 
 .submit-btn {
   width: 100%;
@@ -187,6 +220,50 @@ a { color: var(--accent); }
   margin-top: 0.4rem;
 }
 .submit-btn:disabled { filter: grayscale(0.7) brightness(0.7); cursor: not-allowed; }
+
+/* ---------- about (landing) ---------- */
+.about {
+  margin: 2.6rem auto 0;
+  padding-top: 2rem;
+  border-top: 1px solid var(--line);
+  max-width: 900px;
+}
+.about > h2 { font-size: 1.5rem; margin: 0 0 0.5rem; text-align: center; }
+.about-lead {
+  color: var(--ink-soft);
+  max-width: 64ch;
+  margin: 0 auto 1.6rem;
+  text-align: center;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+@media (max-width: 800px) { .about-grid { grid-template-columns: 1fr; } }
+.about-card {
+  background: var(--bg-soft);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.2rem;
+}
+.about-card h3 { margin: 0 0 0.5rem; font-size: 1.05rem; }
+.about-card p { margin: 0; font-size: 0.9rem; color: var(--ink); }
+.about-why-head { text-align: center; font-size: 1.2rem; margin: 1.8rem 0 0.5rem; }
+.about-why {
+  max-width: 68ch;
+  margin: 0 auto;
+  text-align: center;
+  color: var(--ink);
+}
+.about-disclaimer {
+  max-width: 60ch;
+  margin: 1rem auto 0;
+  text-align: center;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  font-style: italic;
+}
 
 /* ---------- result ---------- */
 .result-hero { text-align: center; padding: 1.5rem 0 0.5rem; }

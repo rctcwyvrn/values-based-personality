@@ -23,6 +23,16 @@ def test_index_lists_values(client):
     assert b"Values-Based Personality Test" in r.data
 
 
+def test_index_has_about_section(client):
+    body = client.get("/").get_data(as_text=True)
+    assert 'id="about"' in body
+    # the three frameworks are explained
+    assert "Acceptance and Commitment Therapy" in body
+    assert "Schwartz" in body and "circumplex" in body
+    assert "Big Five" in body
+    assert "Why combine all three?" in body
+
+
 def test_types_index(client):
     r = client.get("/types")
     assert r.status_code == 200

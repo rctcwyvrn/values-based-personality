@@ -1,0 +1,1 @@
+docker run -d -p 9000:9000 -e ALLOWED_HOSTS=valuesbasedpersonality.com,www.valuesbasedpersonality.com -e TRUST_PROXY=1 values-based-personality:latest
