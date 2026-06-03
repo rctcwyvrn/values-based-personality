@@ -42,7 +42,7 @@
         document.execCommand("copy");
         flash("Copied! Paste it anywhere to share.");
       } catch (__) {
-        flash("Couldn't copy automatically — select the text above.");
+        flash("Couldn't copy automatically. Select the text above.");
       }
       document.body.removeChild(ta);
     }

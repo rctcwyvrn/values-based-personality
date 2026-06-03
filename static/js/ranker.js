@@ -60,11 +60,11 @@
       submitBtn.textContent =
         "Remove " + over + " more to continue";
       hintEl.textContent =
-        over + " over — cut the ones that matter least with ×.";
+        over + " over. Cut the ones that matter least with ×.";
     } else {
       submitBtn.disabled = false;
       submitBtn.textContent = "Reveal my personality";
-      hintEl.textContent = "Drag to rank — most important at the top.";
+      hintEl.textContent = "Drag to rank, with your most important at the top.";
     }
 
     // Reflect chosen state on the pool chips.

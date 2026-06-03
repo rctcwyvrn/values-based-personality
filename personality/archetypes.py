@@ -52,7 +52,7 @@ ARCHETYPES = [
             "choose your own path and fill it with new experience. Constraint, "
             "repetition, and other people's rulebooks drain you faster than "
             "almost anything else.",
-            "On the self-focus axis you're roughly balanced — you're not "
+            "On the self-focus axis you're roughly balanced: you're not"
             "chasing dominance or status, and you're not primarily organised "
             "around serving others either. The point is the experience itself. "
             "That makes you a natural first-mover: you'll try the thing, go to "
@@ -81,7 +81,7 @@ ARCHETYPES = [
         "big_five_hint": "very high Openness",
         "axis_change": {
             "pole": "Openness to Change",
-            "note": "Self-direction is your centre of gravity — you need room to think, make, and express on your own terms.",
+            "note": "Self-direction is your centre of gravity. You need room to think, make, and express on your own terms.",
         },
         "axis_focus": {
             "pole": "Balanced, leaning Self-Transcendence",
@@ -102,7 +102,7 @@ ARCHETYPES = [
             "circle, but where they chase experience, you chase expression. "
             "Self-direction is your dominant value: the freedom to imagine and "
             "to make is non-negotiable. A streak of universalism gives your "
-            "work a reach beyond yourself — you want what you make to matter "
+            "work a reach beyond yourself. You want what you make to matter"
             "and to be beautiful.",
             "That blend puts you slightly toward Self-Transcendence on the "
             "focus axis. You're rarely motivated by control or recognition for "
@@ -133,7 +133,7 @@ ARCHETYPES = [
         "big_five_hint": "high Openness with reflective calm",
         "axis_change": {
             "pole": "Openness to Change",
-            "note": "Independent thought drives you — you reserve the right to reach your own conclusions.",
+            "note": "Independent thought drives you. You reserve the right to reach your own conclusions.",
         },
         "axis_focus": {
             "pole": "Self-Transcendence",
@@ -169,7 +169,7 @@ ARCHETYPES = [
         "tensions": [
             "Analysis can crowd out action and decision",
             "May seem detached or above the fray",
-            "Can underweight feelings — own and others'",
+            "Can underweight feelings, both their own and others'",
         ],
         "opposite": "achiever",
         "neighbors": ["creator", "idealist"],
@@ -187,7 +187,7 @@ ARCHETYPES = [
         },
         "axis_focus": {
             "pole": "Self-Transcendence",
-            "note": "Benevolence is your core — the wellbeing of those around you is the measure of a good life.",
+            "note": "Benevolence is your core: the wellbeing of those around you is the measure of a good life.",
         },
         "big_five_profile": [
             {"label": "Agreeableness", "level": "very high"},
@@ -200,14 +200,14 @@ ARCHETYPES = [
             "you've helped."
         ),
         "detail": [
-            "You sit deep in Self-Transcendence, anchored by benevolence — "
+            "You sit deep in Self-Transcendence, anchored by benevolence, a"
             "devotion to the concrete, near people in your life. A thread of "
             "universalism widens that circle of care beyond your inner ring. "
             "On the change-conservation axis you lean gently toward "
             "conservation: you protect bonds and want them to last.",
             "Your gift is presence and reliability for others; people feel "
             "safe with you. The shadow side is the one almost every Caregiver "
-            "knows — your own needs slide to the bottom of the list, and you "
+            "knows: your own needs slide to the bottom of the list, and you "
             "can stay loyal to people or situations past the point where it "
             "serves anyone. Caring for yourself is not a betrayal of the type; "
             "it's what keeps it sustainable.",
@@ -235,7 +235,7 @@ ARCHETYPES = [
         "big_five_hint": "high Extraversion and Agreeableness",
         "axis_change": {
             "pole": "Openness to Change",
-            "note": "Spontaneity and shared experience matter — you bring warmth into motion.",
+            "note": "Spontaneity and shared experience matter. You bring warmth into motion.",
         },
         "axis_focus": {
             "pole": "Self-Transcendence, with a hedonic streak",
@@ -256,7 +256,7 @@ ARCHETYPES = [
             "more spontaneous than the pure Caregiver: you sit partly in "
             "Self-Transcendence and partly on the Openness-to-Change side. "
             "Connection, for you, is meant to be felt and enjoyed.",
-            "You're the social glue — you notice who's left out, you start the "
+            "You're the social glue: you notice who's left out, you start the "
             "gathering, you turn a group of people into a group. The tension is "
             "depth versus breadth: in keeping everyone close and everything "
             "pleasant, harder truths and your own quieter needs can go unsaid.",
@@ -288,7 +288,7 @@ ARCHETYPES = [
         },
         "axis_focus": {
             "pole": "Balanced, with a protective streak",
-            "note": "Not driven by status or self-display — your effort goes to safeguarding people and commitments.",
+            "note": "You're not driven by status or self-display; your effort goes to safeguarding people and commitments.",
         },
         "big_five_profile": [
             {"label": "Conscientiousness", "level": "very high"},
@@ -301,7 +301,7 @@ ARCHETYPES = [
             "on."
         ),
         "detail": [
-            "You anchor the Conservation pole of the circle — security, "
+            "You anchor the Conservation pole of the circle: security,"
             "conformity, and tradition together. You value stability, do what "
             "you say you'll do, and honour your commitments and the structures "
             "that hold things together. Where the Explorer runs toward change, "
@@ -309,7 +309,7 @@ ARCHETYPES = [
             "On the focus axis you're balanced but quietly protective: your "
             "diligence is in service of keeping people and promises safe, not "
             "of winning. People rely on you precisely because you're "
-            "predictable in the best sense. The growth edge is flexibility — "
+            "predictable in the best sense. The growth edge is flexibility:"
             "not every rule is worth keeping, and not every change is a threat.",
         ],
         "strengths": [
@@ -335,7 +335,7 @@ ARCHETYPES = [
         "big_five_hint": "high Conscientiousness and Extraversion",
         "axis_change": {
             "pole": "Balanced",
-            "note": "You'll embrace change or structure — whichever moves you toward the goal.",
+            "note": "You'll embrace change or structure, whichever moves you toward the goal.",
         },
         "axis_focus": {
             "pole": "Self-Enhancement",
@@ -352,14 +352,14 @@ ARCHETYPES = [
             "life around."
         ),
         "detail": [
-            "You anchor the Self-Enhancement pole — achievement (demonstrated "
+            "You anchor the Self-Enhancement pole: achievement (demonstrated"
             "competence) paired with power (influence and the ability to shape "
             "outcomes). You set goals, measure progress, and take ownership of "
             "results. On the change axis you're pragmatic: you'll innovate or "
             "follow the process, whichever wins.",
             "This drive makes you effective and dependable under a target. The "
             "classic tension is that the self-enhancement that fuels you sits "
-            "directly opposite self-transcendence on the circle — so the "
+            "directly opposite self-transcendence on the circle, so the"
             "growth work is making sure ambition doesn't crowd out care, and "
             "that worth isn't fully outsourced to the scoreboard.",
         ],
@@ -403,12 +403,12 @@ ARCHETYPES = [
             "away from."
         ),
         "detail": [
-            "You're the purest Self-Transcendence type, led by universalism — "
+            "You're the purest Self-Transcendence type, led by universalism, a"
             "concern that reaches past your own circle to everyone and "
             "everything. Benevolence keeps it personal as well as principled. "
             "Your reforming instinct leans you toward Openness to Change: the "
             "status quo is rarely good enough.",
-            "At your best you're a conscience — you see injustice others "
+            "At your best you're a conscience: you see injustice others"
             "normalise and you won't let it rest. The cost of caring that "
             "widely is real: the gap between the world as it is and as it "
             "should be can wear you down, and moral clarity can tip into "
@@ -437,11 +437,11 @@ ARCHETYPES = [
         "big_five_hint": "openness paired with emotional steadiness",
         "axis_change": {
             "pole": "Conservation",
-            "note": "Tradition and continuity ground you — you draw on what is timeless and inherited.",
+            "note": "Tradition and continuity ground you. You draw on what is timeless and inherited.",
         },
         "axis_focus": {
             "pole": "Self-Transcendence",
-            "note": "You orient toward something larger than yourself — the sacred, the meaningful, the whole.",
+            "note": "You orient toward something larger than yourself: the sacred, the meaningful, the whole.",
         },
         "big_five_profile": [
             {"label": "Openness", "level": "high"},
@@ -455,13 +455,13 @@ ARCHETYPES = [
         ),
         "detail": [
             "Tradition anchors you on the Conservation side of the circle, but "
-            "not as rule-following — as reverence for what endures and gives "
+            "not as rule-following, but as reverence for what endures and gives "
             "meaning. Touches of universalism and self-direction make it your "
             "own search rather than an inherited script, and pull you toward "
             "Self-Transcendence in aim.",
             "You bring depth and groundedness; you're rarely rattled by "
             "surface noise because you're oriented to something deeper. The "
-            "tension is staying engaged with the ordinary, practical world — "
+            "tension is staying engaged with the ordinary, practical world,"
             "and holding meaning loosely enough that it stays a living search "
             "rather than a fixed certainty.",
         ],
@@ -492,7 +492,7 @@ ARCHETYPES = [
         },
         "axis_focus": {
             "pole": "Self-directed enjoyment",
-            "note": "Your own experience of pleasure and aliveness leads — not status, not duty.",
+            "note": "Your own experience of pleasure and aliveness leads, not status or duty.",
         },
         "big_five_profile": [
             {"label": "Extraversion", "level": "very high"},
@@ -501,17 +501,17 @@ ARCHETYPES = [
         ],
         "description": (
             "You take life as it comes and savour it. Play, pleasure, and "
-            "spontaneity aren't indulgences to you — they're the point."
+            "spontaneity aren't indulgences to you. They're the point."
         ),
         "detail": [
-            "You live where hedonism meets stimulation — the most "
+            "You live where hedonism meets stimulation, the most"
             "present-tense corner of the Openness-to-Change side. You're here "
             "for the experience of being alive: pleasure, play, novelty, the "
             "good moment as it happens. Plans and obligations are useful only "
             "insofar as they don't kill the spark.",
             "Your joy is contagious and you give others permission to "
             "lighten up. Directly opposite you on the circle sits the "
-            "Guardian's world of duty and restraint — which is exactly your "
+            "Guardian's world of duty and restraint, which is exactly your"
             "growth edge: a little structure and follow-through lets the good "
             "times actually last instead of fizzling.",
         ],

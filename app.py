@@ -37,7 +37,9 @@ from values import VALUES
 MAX_PICKS = 10
 
 # Emphasis ratio mapped to the outer edge of the radar (values above this clamp).
-RADAR_FULL_SCALE = 2.5
+# Raised from 2.5 to give sharpened (spikier) profiles headroom before they
+# clamp to the rim — see EMPHASIS_GAMMA in personality/profile.py.
+RADAR_FULL_SCALE = 3.5
 
 
 def _radar_geometry(schwartz: list[dict], size: int = 320, margin: int = 70) -> dict:

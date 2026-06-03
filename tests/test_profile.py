@@ -62,6 +62,21 @@ def test_rank_weights_edge_cases():
     assert rank_weights(1) == [1.0]
 
 
+def test_rank_weights_are_top_heavy():
+    # power weighting makes the #1 pick carry more than the linear 1/(n) ramp
+    w = rank_weights(10)
+    assert w[0] > 0.25  # linear would give 10/55 ~= 0.18
+
+
+def test_sharpen_pivots_at_baseline():
+    from personality.profile import _sharpen, EMPHASIS_GAMMA
+    out = _sharpen({"a": 1.0, "b": 2.0, "c": 0.5})
+    assert EMPHASIS_GAMMA > 1.0
+    assert out["a"] == 1.0          # baseline is a fixed point
+    assert out["b"] > 2.0           # above average amplified
+    assert out["c"] < 0.5           # below average suppressed
+
+
 def test_rank_order_matters():
     """Putting an achievement value first vs last shifts the raw vector."""
     first = _aggregate(["Ambition", "Kindness"], "schwartz", SCHWARTZ)

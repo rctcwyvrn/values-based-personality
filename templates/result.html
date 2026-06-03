@@ -4,7 +4,7 @@
 {% block head_meta %}
 {% set p = profile.classification.primary %}
 <meta property="og:site_name" content="Values-Based Personality Test">
-<meta property="og:title" content="I'm {{ p.name }} — {{ p.tagline }}">
+<meta property="og:title" content="I'm {{ p.name }}: {{ p.tagline }}">
 <meta property="og:description" content="{{ p.description }}">
 <meta property="og:type" content="website">
 <meta property="og:url" content="{{ share.url }}">
@@ -25,7 +25,7 @@
   <p class="blend-note">
     …with a strong streak of
     <a href="{{ url_for('archetype', key=c.secondary.key) }}"><strong>{{ c.secondary.name }}</strong></a>.
-    Your values sit right between two types — a genuine blend.
+    Your values sit right between two types, a genuine blend.
   </p>
   {% elif c.confidence == "leaning" %}
   <p class="blend-note">
@@ -68,7 +68,7 @@
         <span class="bar-label">{{ t.label }}</span>
         <span class="bar-track">
           <span class="bar-fill band-{{ t.band }}"
-                style="width: {{ (t.emphasis / 2.5 * 100) | round(1) }}%;"></span>
+                style="width: {{ [t.emphasis / 3.5 * 100, 100] | min | round(1) }}%;"></span>
         </span>
         <span class="bar-value">{{ t.emphasis | round(1) }}×</span>
       </li>
@@ -85,7 +85,7 @@
         <span class="q-label">{{ q.label }}</span>
         <span class="bar-track">
           <span class="bar-fill band-quadrant"
-                style="width: {{ (q.emphasis / 2.0 * 100) | round(1) }}%;"></span>
+                style="width: {{ [q.emphasis / 3.0 * 100, 100] | min | round(1) }}%;"></span>
         </span>
         <span class="bar-value">{{ q.emphasis | round(1) }}×</span>
       </li>
@@ -125,7 +125,7 @@
          data-title="{{ profile.classification.primary.name }} · Values-Based Personality Test"
          data-text="{{ share.text }}">
   <h2>Share your result</h2>
-  <p class="card-sub">Copy your result and paste it anywhere — the link carries your ranking.</p>
+  <p class="card-sub">Copy your result and paste it anywhere. The link carries your ranking.</p>
   <p class="share-message" id="share-message">{{ share.text }}</p>
   <div class="share-buttons">
     <button type="button" class="share-btn primary" data-share="copy">

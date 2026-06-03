@@ -32,22 +32,44 @@ from .dimensions import (
 _BY_NAME = {v["name"]: v for v in VALUES}
 _BASELINE = compute_baseline(VALUES)
 
+# --- "spikiness" knobs -----------------------------------------------------
+# RANK_WEIGHT_EXPONENT shapes how much top picks dominate: weights are
+# (n - rank) ** exponent, so 1.0 is the old linear ramp and >1 makes the first
+# choices count for more. EMPHASIS_GAMMA sharpens the final emphasis vector,
+# pivoting at the baseline (1.0): values above average inflate, below average
+# shrink, so a profile reads with sharper peaks and deeper valleys. Both are
+# pure dials — raise them for spikier results, set to 1.0 to restore the flat
+# behaviour.
+RANK_WEIGHT_EXPONENT = 2.0
+EMPHASIS_GAMMA = 1.25
+
 
 def value_names() -> list[str]:
     return [v["name"] for v in VALUES]
 
 
 def rank_weights(n: int) -> list[float]:
-    """Linear-decay weights for n ranked picks, normalised to sum to 1.
+    """Decay weights for n ranked picks, normalised to sum to 1.
 
-    The #1 pick gets weight n, the last gets weight 1; first choices dominate
-    but the whole list contributes. A gentle curve keeps the tail meaningful.
+    Weight for rank i is (n - i) ** RANK_WEIGHT_EXPONENT, so the #1 pick gets
+    the most and the last the least. The exponent controls how top-heavy the
+    curve is (1.0 = linear; higher = first choices dominate more).
     """
     if n <= 0:
         return []
-    raw = [n - i for i in range(n)]
+    raw = [(n - i) ** RANK_WEIGHT_EXPONENT for i in range(n)]
     total = float(sum(raw))
     return [r / total for r in raw]
+
+
+def _sharpen(emphasis: dict[str, float]) -> dict[str, float]:
+    """Raise contrast by exponentiating emphasis, pivoting at the baseline.
+
+    emphasis == 1.0 (exactly average) is a fixed point; above-average
+    dimensions are amplified and below-average ones suppressed, so the profile
+    becomes spikier without changing the ordering of dimensions.
+    """
+    return {k: v ** EMPHASIS_GAMMA for k, v in emphasis.items()}
 
 
 def _aggregate(ranked: list[str], framework: str, keys: list[str]) -> dict[str, float]:
@@ -115,7 +137,7 @@ def archetype_geometry(arch: dict) -> dict:
     Lets each type page render the same circumplex radar the result page uses,
     driven by the archetype's defining values rather than a user's picks.
     """
-    emphasis = _schwartz_emphasis_of(arch["schwartz"])
+    emphasis = _sharpen(_schwartz_emphasis_of(arch["schwartz"]))
     return {
         "schwartz": _schwartz_sorted(emphasis, arch["schwartz"]),
         "higher_order": higher_order_scores(emphasis),
@@ -146,7 +168,10 @@ def classify(schwartz_emphasis: dict[str, float]) -> dict:
     """
     scored = []
     for arch in ARCHETYPES:
-        sim = _cosine(schwartz_emphasis, _archetype_emphasis(arch["schwartz"]), SCHWARTZ)
+        # Sharpen the archetype side too, so the cosine compares like with like
+        # when the caller passes a sharpened user emphasis.
+        proto = _sharpen(_archetype_emphasis(arch["schwartz"]))
+        sim = _cosine(schwartz_emphasis, proto, SCHWARTZ)
         scored.append((arch, sim))
     scored.sort(key=lambda t: t[1], reverse=True)
 
@@ -171,15 +196,24 @@ def classify(schwartz_emphasis: dict[str, float]) -> dict:
     }
 
 
+# Band cutoffs, expressed in raw-emphasis terms but raised to the sharpening
+# exponent so the *labels* trigger at the same underlying emphasis as before
+# (a raw 1.5 still reads "high"), even though the displayed number is sharpened.
+_BAND_HIGH = 1.5 ** EMPHASIS_GAMMA
+_BAND_ELEVATED = 1.15 ** EMPHASIS_GAMMA
+_BAND_MUTED = 0.85 ** EMPHASIS_GAMMA
+_BAND_LOW = 0.6 ** EMPHASIS_GAMMA
+
+
 def _band(emphasis: float) -> str:
-    """Label an emphasis ratio as high / moderate / low / typical."""
-    if emphasis >= 1.5:
+    """Label a (sharpened) emphasis ratio as high / elevated / low / typical."""
+    if emphasis >= _BAND_HIGH:
         return "high"
-    if emphasis >= 1.15:
+    if emphasis >= _BAND_ELEVATED:
         return "elevated"
-    if emphasis <= 0.6:
+    if emphasis <= _BAND_LOW:
         return "low"
-    if emphasis <= 0.85:
+    if emphasis <= _BAND_MUTED:
         return "muted"
     return "typical"
 
@@ -234,8 +268,8 @@ def conflict_note(higher_order: list[dict]) -> str | None:
             la = HIGHER_ORDER_LABELS[a]
             lb = HIGHER_ORDER_LABELS[b]
             return (
-                f"Your values pull strongly toward both {la} and {lb} — "
-                "normally opposing motivations. That points to a complex, "
+                f"Your values pull strongly toward both {la} and {lb}, "
+                "which are normally opposing motivations. That points to a complex, "
                 "multi-sided personality that holds tension rather than "
                 "resolving it."
             )
@@ -250,8 +284,13 @@ def build_personality(ranked: list[str]) -> dict:
     schwartz_raw = _aggregate(ranked, "schwartz", SCHWARTZ)
     big_five_raw = _aggregate(ranked, "big_five", BIG_FIVE)
 
-    schwartz_emphasis = _emphasis(schwartz_raw, _BASELINE["schwartz"])
-    big_five_emphasis = _emphasis(big_five_raw, _BASELINE["big_five"])
+    # Raw emphasis (ratio to baseline), then a sharpened copy for display and
+    # classification. Conflict detection runs on the *raw* higher-order scores
+    # so its calibrated 1.15 threshold keeps the same meaning.
+    schwartz_raw_emphasis = _emphasis(schwartz_raw, _BASELINE["schwartz"])
+    big_five_raw_emphasis = _emphasis(big_five_raw, _BASELINE["big_five"])
+    schwartz_emphasis = _sharpen(schwartz_raw_emphasis)
+    big_five_emphasis = _sharpen(big_five_raw_emphasis)
 
     classification = classify(schwartz_emphasis)
     big_five = describe_big_five(big_five_emphasis)
@@ -267,5 +306,5 @@ def build_personality(ranked: list[str]) -> dict:
         "schwartz": schwartz_sorted,
         "higher_order": higher_order,
         "compass": compass,
-        "conflict_note": conflict_note(higher_order),
+        "conflict_note": conflict_note(higher_order_scores(schwartz_raw_emphasis)),
     }
