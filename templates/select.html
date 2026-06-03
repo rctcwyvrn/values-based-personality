@@ -23,8 +23,8 @@
       </div>
       <ul class="value-pool" id="value-pool">
         {% for v in values %}
-        <li class="value-chip" data-name="{{ v.name }}" tabindex="0"
-            title="{{ v.description }}">
+        <li class="value-chip" data-name="{{ v.name }}" data-id="{{ v.id }}"
+            tabindex="0" title="{{ v.description }}">
           <span class="chip-name">{{ v.name }}</span>
           <span class="chip-desc">{{ v.description }}</span>
         </li>

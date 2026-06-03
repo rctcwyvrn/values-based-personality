@@ -19,8 +19,26 @@
 
   const picks = []; // ordered array of value names
 
+  // name -> stable value id, read from the rendered chips. The ranking is
+  // submitted as a base64url token of these ids (one byte each), matching the
+  // server's encoding, rather than a comma-separated list of names.
+  const idOf = {};
+  pool.querySelectorAll(".value-chip").forEach((chip) => {
+    idOf[chip.dataset.name] = parseInt(chip.dataset.id, 10);
+  });
+
+  function encodeToken(names) {
+    let bin = "";
+    names.forEach((name) => {
+      const id = idOf[name];
+      if (id >= 0) bin += String.fromCharCode(id);
+    });
+    if (!bin) return "";
+    return btoa(bin).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+  }
+
   function sync() {
-    hiddenInput.value = picks.join(",");
+    hiddenInput.value = encodeToken(picks);
     countEl.textContent = String(picks.length);
     submitBtn.disabled = picks.length === 0;
     picksEmpty.style.display = picks.length ? "none" : "";

@@ -26,6 +26,13 @@ def test_value_count_and_uniqueness():
     assert len(set(names)) == 100
 
 
+def test_value_ids_unique_and_byte_sized():
+    ids = [v["id"] for v in VALUES]
+    assert len(ids) == len(set(ids)), "ids must be unique"
+    # one byte each, so they fit the base64 token encoding
+    assert all(isinstance(i, int) and 0 <= i <= 255 for i in ids)
+
+
 @pytest.mark.parametrize("value", VALUES, ids=[v["name"] for v in VALUES])
 def test_loadings_sum_to_one(value):
     for framework, keys in (("schwartz", SCHWARTZ), ("big_five", BIG_FIVE)):

@@ -26,22 +26,24 @@ def test_security_headers_present(client):
 
 
 def test_reflected_url_is_escaped_not_executed(client):
-    r = client.get('/result?ranked=Kindness&x="><script>alert(1)</script>')
+    token = app_module._encode_ranked(["Kindness"])
+    r = client.get(f'/result?ranked={token}&x="><script>alert(1)</script>')
     body = r.get_data(as_text=True)
     assert "<script>alert(1)" not in body
     assert "&lt;script&gt;" in body or "%3Cscript%3E" in body
 
 
 def test_oversized_ranked_input_is_bounded(client):
-    # A pathologically long query must not error or hang; it's truncated/parsed.
-    r = client.get("/result?ranked=" + "Kindness," * 5000)
-    assert r.status_code in (200, 400)
+    # A pathologically long token must not error or hang; it's rejected by the
+    # length cap and treated as no selection.
+    r = client.get("/result?ranked=" + "A" * 100000)
+    assert r.status_code == 400
 
 
-def test_invalid_value_names_rejected(client):
-    r = client.get("/result?ranked=__import__,DROP TABLE,<b>,Kindness")
-    assert r.status_code == 200
-    # only the legitimate value survives the whitelist
+def test_malformed_token_rejected(client):
+    # injection-y junk isn't valid base64url -> decodes to nothing -> 400
+    r = client.get("/result?ranked=__import__;DROP TABLE;<b>")
+    assert r.status_code == 400
     assert b"DROP TABLE" not in r.data
 
 

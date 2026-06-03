@@ -25,7 +25,7 @@ COPY static/ ./static/
 RUN useradd --create-home --uid 10001 appuser
 USER appuser
 
-EXPOSE 8000
+EXPOSE 9000 
 
 # 3 workers is a reasonable default; tune via $WEB_CONCURRENCY if desired.
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "--workers", "3", "wsgi:app"]
+CMD ["gunicorn", "--bind", "0.0.0.0:9000", "--workers", "3", "wsgi:app"]

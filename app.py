@@ -6,8 +6,11 @@
 
 from __future__ import annotations
 
+import base64
+import binascii
 import math
 import os
+import re
 
 from flask import Flask, abort, render_template, request
 
@@ -96,23 +99,46 @@ def _radar_geometry(schwartz: list[dict], size: int = 320, margin: int = 70) -> 
     }
 
 
-def _parse_ranked(raw: str) -> list[str]:
-    """Parse a comma-separated ranking, keeping only valid, unique names.
+# Stable id <-> name maps. Each value carries an explicit, frozen ``id`` (see
+# values.py) so the URL token is independent of the list's ordering — reordering
+# or extending values.py never changes existing links. The ranking is encoded
+# as base64url of the value ids (one byte each, ids being < 256), giving a
+# short, opaque token instead of a long comma-separated list of names.
+_NAME_BY_ID = {v["id"]: v["name"] for v in VALUES}
+_ID_BY_NAME = {v["name"]: v["id"] for v in VALUES}
+_TOKEN_RE = re.compile(r"^[A-Za-z0-9_-]*$")
 
-    Order is preserved (it *is* the ranking) and capped at MAX_PICKS. Used for
-    both the ?ranked= query param on the result/picker pages and any form post.
+
+def _encode_ranked(names: list[str]) -> str:
+    """Encode a ranking (ordered value names) as a base64url token of ids."""
+    raw = bytes(_ID_BY_NAME[n] for n in names if n in _ID_BY_NAME)
+    return base64.urlsafe_b64encode(raw).decode("ascii").rstrip("=")
+
+
+def _decode_ranked(token: str) -> list[str]:
+    """Decode a base64url token back to an ordered, validated list of names.
+
+    Tolerant of junk: anything that isn't a clean token, or that decodes to
+    unknown / duplicate ids, is dropped. Order is preserved (it *is* the
+    ranking) and capped at MAX_PICKS. Returns [] on any problem.
     """
-    valid = {v["name"] for v in VALUES}
-    seen: set[str] = set()
+    token = (token or "").strip()
+    # A valid top-MAX_PICKS token is ~14 chars; cap well above that and reject
+    # non-alphabet input so we never do work proportional to a giant query.
+    if not token or len(token) > 256 or not _TOKEN_RE.match(token):
+        return []
+    pad = "=" * (-len(token) % 4)
+    try:
+        raw = base64.urlsafe_b64decode(token + pad)
+    except (binascii.Error, ValueError):
+        return []
+
+    seen: set[int] = set()
     out: list[str] = []
-    # Bound the input before splitting: 10 names is < 200 chars, so anything
-    # beyond this is malformed/abusive and we refuse to do work proportional
-    # to a giant query string (defence-in-depth against DoS).
-    for name in raw[:1000].split(","):
-        name = name.strip()
-        if name and name in valid and name not in seen:
-            seen.add(name)
-            out.append(name)
+    for value_id in raw:
+        if value_id in _NAME_BY_ID and value_id not in seen:
+            seen.add(value_id)
+            out.append(_NAME_BY_ID[value_id])
             if len(out) >= MAX_PICKS:
                 break
     return out
@@ -180,7 +206,7 @@ def create_app() -> Flask:
 
     @app.route("/")
     def index():
-        initial = _parse_ranked(request.args.get("ranked", ""))
+        initial = _decode_ranked(request.args.get("ranked", ""))
         return render_template(
             "select.html",
             values=VALUES,
@@ -190,7 +216,7 @@ def create_app() -> Flask:
 
     @app.route("/result")
     def result():
-        ranked = _parse_ranked(request.args.get("ranked", ""))
+        ranked = _decode_ranked(request.args.get("ranked", ""))
 
         if not ranked:
             return render_template(
@@ -207,7 +233,7 @@ def create_app() -> Flask:
             "result.html",
             profile=profile,
             radar=radar,
-            ranked_param=",".join(ranked),
+            ranked_param=_encode_ranked(ranked),
             share=_share_message(profile["classification"]["primary"], request.url),
         )
 
