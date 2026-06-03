@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+{% block title %}{{ profile.classification.primary.name }} · Values-Based Personality Test{% endblock %}
+
+{% block head_meta %}
+{% set p = profile.classification.primary %}
+<meta property="og:site_name" content="Values-Based Personality Test">
+<meta property="og:title" content="I'm {{ p.name }} — {{ p.tagline }}">
+<meta property="og:description" content="{{ p.description }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ share.url }}">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="I'm {{ p.name }} on the Values-Based Personality Test">
+<meta name="twitter:description" content="{{ p.tagline }}. What's your type?">
+{% endblock %}
+
+{% block content %}
+{% set c = profile.classification %}
+<section class="result-hero">
+  <p class="eyebrow">Your personality reads as</p>
+  <p class="archetype-emoji" aria-hidden="true">{{ c.primary.emoji }}</p>
+  <h1 class="archetype-name">{{ c.primary.name }}</h1>
+  <p class="archetype-tagline">{{ c.primary.tagline }}</p>
+
+  {% if c.confidence == "blended" %}
+  <p class="blend-note">
+    …with a strong streak of
+    <a href="{{ url_for('archetype', key=c.secondary.key) }}"><strong>{{ c.secondary.name }}</strong></a>.
+    Your values sit right between two types — a genuine blend.
+  </p>
+  {% elif c.confidence == "leaning" %}
+  <p class="blend-note">
+    …leaning toward
+    <a href="{{ url_for('archetype', key=c.secondary.key) }}"><strong>{{ c.secondary.name }}</strong></a>.
+  </p>
+  {% endif %}
+
+  <p class="archetype-desc">{{ c.primary.description }}</p>
+  <p class="archetype-bigfive">Typically {{ c.primary.big_five_hint }}.</p>
+  <p class="archetype-link">
+    <a class="read-more" href="{{ url_for('archetype', key=c.primary.key) }}">
+      Read the full {{ c.primary.name }} profile →
+    </a>
+  </p>
+</section>
+
+{% if profile.conflict_note %}
+<section class="conflict-card">
+  <h2>A note on complexity</h2>
+  <p>{{ profile.conflict_note }}</p>
+</section>
+{% endif %}
+
+<div class="result-grid">
+  <section class="card radar-card">
+    <h2>Your values compass</h2>
+    <p class="card-sub">
+      How far each motivation reaches past the average person (the faint ring).
+    </p>
+    {% include "_radar.html" %}
+  </section>
+
+  <section class="card bigfive-card">
+    <h2>Big Five traits</h2>
+    <p class="card-sub">Sorted by how distinctive each trait is in your choices.</p>
+    <ul class="bar-list">
+      {% for t in profile.big_five %}
+      <li class="bar-row">
+        <span class="bar-label">{{ t.label }}</span>
+        <span class="bar-track">
+          <span class="bar-fill band-{{ t.band }}"
+                style="width: {{ (t.emphasis / 2.5 * 100) | round(1) }}%;"></span>
+        </span>
+        <span class="bar-value">{{ t.emphasis | round(1) }}×</span>
+      </li>
+      {% endfor %}
+    </ul>
+    <p class="legend">× = how strongly expressed vs. an average selection (1.0× = average).</p>
+  </section>
+
+  <section class="card quadrant-card">
+    <h2>Motivational quadrants</h2>
+    <ul class="quadrant-list">
+      {% for q in profile.higher_order %}
+      <li>
+        <span class="q-label">{{ q.label }}</span>
+        <span class="bar-track">
+          <span class="bar-fill band-quadrant"
+                style="width: {{ (q.emphasis / 2.0 * 100) | round(1) }}%;"></span>
+        </span>
+        <span class="bar-value">{{ q.emphasis | round(1) }}×</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="card values-card">
+    <h2>Your ranked values</h2>
+    <ol class="ranked-values">
+      {% for name in profile.ranked %}<li>{{ name }}</li>{% endfor %}
+    </ol>
+    <h3>Top motivations driving the reading</h3>
+    <ul class="schwartz-top">
+      {% for s in profile.schwartz[:5] %}
+      <li><span>{{ s.label }}</span><span class="bar-value">{{ s.emphasis | round(1) }}×</span></li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
+
+<section class="other-types">
+  <h2>How close the other types came</h2>
+  <ul class="type-ranking">
+    {% for item in c.ranked %}
+    <li class="{% if loop.index <= 2 %}is-top{% endif %}">
+      <a class="t-name" href="{{ url_for('archetype', key=item.archetype.key) }}">{{ item.archetype.name }}</a>
+      <span class="t-bar-track">
+        <span class="t-bar-fill" style="width: {{ ((item.similarity + 1) / 2 * 100) | round(1) }}%;"></span>
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+<section class="share" id="share"
+         data-title="{{ profile.classification.primary.name }} · Values-Based Personality Test"
+         data-text="{{ share.text }}">
+  <h2>Share your result</h2>
+  <p class="card-sub">Copy your result and paste it anywhere — the link carries your ranking.</p>
+  <p class="share-message" id="share-message">{{ share.text }}</p>
+  <div class="share-buttons">
+    <button type="button" class="share-btn primary" data-share="copy">
+      <span aria-hidden="true">📋</span> Copy result
+    </button>
+    <button type="button" class="share-btn" data-share="native" hidden>
+      <span aria-hidden="true">📤</span> Share…
+    </button>
+  </div>
+  <span class="share-feedback" id="share-feedback" role="status" aria-live="polite"></span>
+</section>
+
+<p class="redo">
+  <a href="{{ url_for('index', ranked=ranked_param) }}">← Edit your choices</a>
+  <span class="redo-sep">·</span>
+  <a href="{{ url_for('index') }}">Start over</a>
+</p>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/share.js') }}"></script>
+{% endblock %}

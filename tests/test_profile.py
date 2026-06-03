@@ -1,0 +1,198 @@
+"""Tests for the personality scoring/classification pipeline."""
+
+import math
+
+import pytest
+
+from personality import (
+    ARCHETYPES,
+    archetype_geometry,
+    build_personality,
+    rank_weights,
+    resonant_values,
+    value_names,
+)
+from personality.archetypes import archetype_by_key
+from personality.dimensions import BIG_FIVE, SCHWARTZ, compute_baseline
+from personality.profile import _aggregate, _emphasis, classify
+from values import VALUES
+
+
+# --- data integrity --------------------------------------------------------
+
+def test_value_count_and_uniqueness():
+    names = value_names()
+    assert len(names) == 100
+    assert len(set(names)) == 100
+
+
+@pytest.mark.parametrize("value", VALUES, ids=[v["name"] for v in VALUES])
+def test_loadings_sum_to_one(value):
+    for framework, keys in (("schwartz", SCHWARTZ), ("big_five", BIG_FIVE)):
+        d = value[framework]
+        assert abs(sum(d.values()) - 1.0) < 1e-9
+        assert set(d).issubset(set(keys))
+        assert all(w >= 0 for w in d.values())
+
+
+def test_baseline_sums_to_one():
+    base = compute_baseline(VALUES)
+    assert abs(sum(base["schwartz"].values()) - 1.0) < 1e-9
+    assert abs(sum(base["big_five"].values()) - 1.0) < 1e-9
+
+
+# --- rank weighting --------------------------------------------------------
+
+def test_rank_weights_normalised_and_decreasing():
+    w = rank_weights(10)
+    assert abs(sum(w) - 1.0) < 1e-9
+    assert all(w[i] > w[i + 1] for i in range(len(w) - 1))
+    assert w[0] > w[-1]
+
+
+def test_rank_weights_edge_cases():
+    assert rank_weights(0) == []
+    assert rank_weights(1) == [1.0]
+
+
+def test_rank_order_matters():
+    """Putting an achievement value first vs last shifts the raw vector."""
+    first = _aggregate(["Ambition", "Kindness"], "schwartz", SCHWARTZ)
+    last = _aggregate(["Kindness", "Ambition"], "schwartz", SCHWARTZ)
+    assert first["achievement"] > last["achievement"]
+    assert last["benevolence"] > first["benevolence"]
+
+
+def test_aggregate_sums_to_one():
+    vec = _aggregate(["Adventure", "Creativity", "Curiosity"], "schwartz", SCHWARTZ)
+    assert abs(sum(vec.values()) - 1.0) < 1e-9
+
+
+def test_unknown_value_raises():
+    with pytest.raises(KeyError):
+        _aggregate(["Not A Value"], "schwartz", SCHWARTZ)
+
+
+# --- classification face validity -----------------------------------------
+
+def _primary_key(ranked):
+    return build_personality(ranked)["classification"]["primary"]["key"]
+
+
+def test_caregiving_values_classify_as_caregiver():
+    ranked = ["Kindness", "Compassion", "Generosity", "Service", "Warmth"]
+    assert _primary_key(ranked) == "caregiver"
+
+
+def test_achievement_values_classify_as_achiever():
+    ranked = ["Ambition", "Mastery", "Power", "Status", "Influence"]
+    assert _primary_key(ranked) == "achiever"
+
+
+def test_exploration_values_classify_as_explorer_or_freespirit():
+    ranked = ["Adventure", "Excitement", "Daring", "Spontaneity", "Freedom"]
+    assert _primary_key(ranked) in {"explorer", "free_spirit"}
+
+
+def test_justice_values_classify_as_idealist():
+    ranked = ["Justice", "Equality", "Fairness", "Diversity"]
+    assert _primary_key(ranked) == "idealist"
+
+
+def test_security_values_classify_as_guardian():
+    ranked = ["Stability", "Safety", "Order", "Duty", "Reliability"]
+    assert _primary_key(ranked) == "guardian"
+
+
+# --- structural guarantees of the full profile ----------------------------
+
+def test_build_personality_shape():
+    profile = build_personality(["Kindness", "Creativity", "Adventure"])
+    assert set(profile) == {
+        "ranked",
+        "classification",
+        "big_five",
+        "schwartz",
+        "higher_order",
+        "compass",
+        "conflict_note",
+    }
+    assert len(profile["big_five"]) == 5
+    assert len(profile["schwartz"]) == 10
+    assert len(profile["higher_order"]) == 4
+    # classification ranks every archetype
+    assert len(profile["classification"]["ranked"]) == 10
+
+
+def test_compass_angle_in_range():
+    profile = build_personality(["Adventure", "Curiosity"])
+    assert 0.0 <= profile["compass"]["angle"] < 360.0
+    assert profile["compass"]["magnitude"] >= 0.0
+
+
+def test_big_five_sorted_descending():
+    profile = build_personality(["Leadership", "Ambition", "Power"])
+    emph = [t["emphasis"] for t in profile["big_five"]]
+    assert emph == sorted(emph, reverse=True)
+
+
+def test_confidence_band_values():
+    profile = build_personality(["Kindness", "Compassion", "Generosity"])
+    assert profile["classification"]["confidence"] in {"clear", "leaning", "blended"}
+
+
+def test_empty_ranked_raises():
+    with pytest.raises(ValueError):
+        build_personality([])
+
+
+# --- archetype catalogue + geometry ---------------------------------------
+
+def test_every_archetype_has_required_fields():
+    keys = {a["key"] for a in ARCHETYPES}
+    assert len(ARCHETYPES) == 10
+    assert len(keys) == 10
+    for a in ARCHETYPES:
+        for field in (
+            "name", "emoji", "tagline", "schwartz", "axis_change", "axis_focus",
+            "big_five_profile", "detail", "strengths", "tensions",
+            "opposite", "neighbors",
+        ):
+            assert field in a, f"{a['key']} missing {field}"
+        assert a["emoji"], "emoji present"
+        assert a["detail"], "detail paragraphs present"
+        assert a["strengths"] and a["tensions"]
+
+
+def test_archetype_relationships_are_valid_keys():
+    keys = {a["key"] for a in ARCHETYPES}
+    for a in ARCHETYPES:
+        assert a["opposite"] in keys
+        assert a["opposite"] != a["key"]
+        for n in a["neighbors"]:
+            assert n in keys and n != a["key"]
+
+
+def test_archetype_geometry_shape():
+    arch = archetype_by_key("caregiver")
+    geo = archetype_geometry(arch)
+    assert len(geo["schwartz"]) == 10
+    assert len(geo["higher_order"]) == 4
+    assert 0.0 <= geo["compass"]["angle"] < 360.0
+
+
+def test_resonant_values_face_validity():
+    caregiver = resonant_values(archetype_by_key("caregiver"))
+    assert "Kindness" in caregiver or "Compassion" in caregiver
+    achiever = resonant_values(archetype_by_key("achiever"))
+    assert any(v in achiever for v in ("Ambition", "Mastery", "Status", "Power"))
+
+
+def test_conflict_note_for_opposing_values():
+    """Mixing strong self-enhancement and self-transcendence flags a conflict."""
+    ranked = ["Power", "Ambition", "Status", "Justice", "Equality", "Compassion"]
+    profile = build_personality(ranked)
+    # Not asserting it always triggers, but if both poles are high it must fire.
+    ho = {h["key"]: h["emphasis"] for h in profile["higher_order"]}
+    if ho["self_enhancement"] >= 1.15 and ho["self_transcendence"] >= 1.15:
+        assert profile["conflict_note"] is not None

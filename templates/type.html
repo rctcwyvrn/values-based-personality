@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% block title %}{{ arch.name }} · Values-Based Personality Test{% endblock %}
+
+{% block head_meta %}
+<meta property="og:site_name" content="Values-Based Personality Test">
+<meta property="og:title" content="{{ arch.name }} — {{ arch.tagline }}">
+<meta property="og:description" content="{{ arch.description }}">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary">
+{% endblock %}
+
+{% block content %}
+<p class="breadcrumb"><a href="{{ url_for('types') }}">← All ten types</a></p>
+
+<section class="type-hero">
+  <p class="archetype-emoji" aria-hidden="true">{{ arch.emoji }}</p>
+  <h1 class="archetype-name">{{ arch.name }}</h1>
+  <p class="archetype-tagline">{{ arch.tagline }}</p>
+  <p class="archetype-desc">{{ arch.description }}</p>
+</section>
+
+<section class="axis-cards">
+  <div class="axis-card">
+    <span class="axis-eyebrow">Openness to Change ↔ Conservation</span>
+    <h3>{{ arch.axis_change.pole }}</h3>
+    <p>{{ arch.axis_change.note }}</p>
+  </div>
+  <div class="axis-card">
+    <span class="axis-eyebrow">Self-Transcendence ↔ Self-Enhancement</span>
+    <h3>{{ arch.axis_focus.pole }}</h3>
+    <p>{{ arch.axis_focus.note }}</p>
+  </div>
+</section>
+
+<div class="result-grid">
+  <section class="card type-detail-card">
+    <h2>The full picture</h2>
+    {% for para in arch.detail %}<p>{{ para }}</p>{% endfor %}
+
+    <h3>Big Five signature</h3>
+    <ul class="bigfive-tags">
+      {% for t in arch.big_five_profile %}
+      <li><span class="bf-trait">{{ t.label }}</span><span class="bf-level">{{ t.level }}</span></li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="card radar-card">
+    <h2>Where this type sits</h2>
+    <p class="card-sub">The motivations that define {{ arch.name }} on the circumplex.</p>
+    {% include "_radar.html" %}
+  </section>
+
+  <section class="card">
+    <h2>At their best</h2>
+    <ul class="trait-list strengths">
+      {% for s in arch.strengths %}<li>{{ s }}</li>{% endfor %}
+    </ul>
+  </section>
+
+  <section class="card">
+    <h2>Growth edges</h2>
+    <ul class="trait-list tensions">
+      {% for t in arch.tensions %}<li>{{ t }}</li>{% endfor %}
+    </ul>
+  </section>
+</div>
+
+<section class="card resonant-card">
+  <h2>Values that lead here</h2>
+  <p class="card-sub">
+    Rank these highly and you'll tend toward {{ arch.name }}.
+  </p>
+  <ul class="resonant-values">
+    {% for name in resonant %}<li>{{ name }}</li>{% endfor %}
+  </ul>
+</section>
+
+<section class="related">
+  <h2>Related types</h2>
+  <div class="related-grid">
+    {% for n in related.neighbors %}
+    <a class="related-card neighbor" href="{{ url_for('archetype', key=n.key) }}">
+      <span class="related-kind">Kindred</span>
+      <span class="related-name">{{ n.name }}</span>
+      <span class="related-tag">{{ n.tagline }}</span>
+    </a>
+    {% endfor %}
+    <a class="related-card opposite" href="{{ url_for('archetype', key=related.opposite.key) }}">
+      <span class="related-kind">Opposite</span>
+      <span class="related-name">{{ related.opposite.name }}</span>
+      <span class="related-tag">{{ related.opposite.tagline }}</span>
+    </a>
+  </div>
+</section>
+
+<p class="redo"><a href="{{ url_for('index') }}">Take the test to find your type →</a></p>
+{% endblock %}

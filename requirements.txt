@@ -1,0 +1,14 @@
+# Runtime dependencies, fully pinned (direct + transitive) so the Docker image
+# is reproducible and ships known, patched versions. Versions mirror the
+# nix-shell (shell.nix). Dev-only tools live in requirements-dev.txt.
+#
+# To regenerate as a hash-locked file: `pip-compile --generate-hashes`.
+Flask==3.0.3
+Werkzeug==3.0.6
+Jinja2==3.1.5
+MarkupSafe==3.0.2
+click==8.1.7
+itsdangerous==2.2.0
+blinker==1.8.2
+gunicorn==23.0.0
+packaging==24.1

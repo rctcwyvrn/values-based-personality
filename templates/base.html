@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}Values-Based Personality Test{% endblock %}</title>
+  {% block head_meta %}
+  <meta property="og:site_name" content="Values-Based Personality Test">
+  <meta property="og:title" content="Values-Based Personality Test">
+  <meta property="og:description" content="Rank what you value and discover which of ten personality types you are.">
+  <meta property="og:type" content="website">
+  <meta name="twitter:card" content="summary">
+  {% endblock %}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ url_for('index') }}">Values-Based&nbsp;Personality&nbsp;Test</a>
+    <p class="tagline">Rank what you value. Discover who that makes you.</p>
+    <nav class="site-nav">
+      <a href="{{ url_for('index') }}">Take the test</a>
+      <a href="{{ url_for('types') }}">The 10 types</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>Built on the ACT values framework, the Schwartz circumplex, and the Big Five.</p>
+  </footer>
+
+  {% block scripts %}{% endblock %}
+</body>
+</html>

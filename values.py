@@ -15,6 +15,9 @@ rather than goals to be achieved. Here each value also carries:
 
 Each loading dict's weights are non-negative and sum to 1.0, so each value
 contributes one unit of "emphasis" spread across the dimensions it expresses.
+The set is curated so emphasis is spread reasonably evenly across all ten
+Schwartz values and all five Big Five traits, rather than piling onto the
+prosocial cluster that dominates raw ACT value lists.
 
 Schwartz keys: self_direction, stimulation, hedonism, achievement, power,
                security, conformity, tradition, benevolence, universalism
@@ -36,6 +39,12 @@ VALUES = [
         "big_five": {"openness": 0.6, "extraversion": 0.4},
     },
     {
+        "name": "Ambition",
+        "description": "Striving with drive toward meaningful accomplishment and advancement",
+        "schwartz": {"achievement": 0.6, "power": 0.4},
+        "big_five": {"conscientiousness": 0.5, "extraversion": 0.5},
+    },
+    {
         "name": "Assertiveness",
         "description": "Standing up respectfully for what I need and what I believe in",
         "schwartz": {"power": 0.5, "self_direction": 0.3, "achievement": 0.2},
@@ -48,10 +57,10 @@ VALUES = [
         "big_five": {"openness": 0.5, "emotional_stability": 0.3, "extraversion": 0.2},
     },
     {
-        "name": "Autonomy",
-        "description": "Acting from my own choices and self-direction",
-        "schwartz": {"self_direction": 1.0},
-        "big_five": {"openness": 0.6, "conscientiousness": 0.4},
+        "name": "Authority",
+        "description": "Taking and exercising legitimate responsibility and command",
+        "schwartz": {"power": 0.8, "conformity": 0.2},
+        "big_five": {"extraversion": 0.6, "conscientiousness": 0.4},
     },
     {
         "name": "Beauty",
@@ -66,16 +75,28 @@ VALUES = [
         "big_five": {"agreeableness": 0.6, "extraversion": 0.4},
     },
     {
-        "name": "Caring",
-        "description": "Looking after and attending to myself, others, and the world",
-        "schwartz": {"benevolence": 0.8, "universalism": 0.2},
-        "big_five": {"agreeableness": 1.0},
+        "name": "Boldness",
+        "description": "Acting daringly and stepping forward where others hesitate",
+        "schwartz": {"stimulation": 0.5, "power": 0.3, "self_direction": 0.2},
+        "big_five": {"extraversion": 0.6, "emotional_stability": 0.4},
+    },
+    {
+        "name": "Calm",
+        "description": "Maintaining an unhurried, settled state of mind",
+        "schwartz": {"security": 0.5, "universalism": 0.5},
+        "big_five": {"emotional_stability": 0.9, "agreeableness": 0.1},
     },
     {
         "name": "Challenge",
         "description": "Stretching myself to grow, learn, and improve",
         "schwartz": {"achievement": 0.5, "stimulation": 0.5},
         "big_five": {"openness": 0.5, "conscientiousness": 0.3, "extraversion": 0.2},
+    },
+    {
+        "name": "Charisma",
+        "description": "Drawing and energizing others through personal presence",
+        "schwartz": {"power": 0.5, "hedonism": 0.5},
+        "big_five": {"extraversion": 0.9, "openness": 0.1},
     },
     {
         "name": "Compassion",
@@ -90,10 +111,10 @@ VALUES = [
         "big_five": {"agreeableness": 0.5, "extraversion": 0.5},
     },
     {
-        "name": "Contribution",
-        "description": "Giving, helping, and making a positive difference",
-        "schwartz": {"benevolence": 0.6, "universalism": 0.4},
-        "big_five": {"agreeableness": 0.7, "conscientiousness": 0.3},
+        "name": "Contentment",
+        "description": "Resting in satisfaction with what I have and who I am",
+        "schwartz": {"security": 0.4, "hedonism": 0.4, "tradition": 0.2},
+        "big_five": {"emotional_stability": 0.8, "agreeableness": 0.2},
     },
     {
         "name": "Cooperation",
@@ -120,6 +141,12 @@ VALUES = [
         "big_five": {"openness": 1.0},
     },
     {
+        "name": "Daring",
+        "description": "Embracing risk and venturing beyond the safe and certain",
+        "schwartz": {"stimulation": 0.6, "power": 0.4},
+        "big_five": {"extraversion": 0.6, "openness": 0.4},
+    },
+    {
         "name": "Dependability",
         "description": "Being someone others can count on",
         "schwartz": {"security": 0.4, "conformity": 0.4, "benevolence": 0.2},
@@ -138,22 +165,40 @@ VALUES = [
         "big_five": {"openness": 1.0},
     },
     {
+        "name": "Duty",
+        "description": "Fulfilling my obligations and doing what is required of me",
+        "schwartz": {"conformity": 0.5, "security": 0.3, "benevolence": 0.2},
+        "big_five": {"conscientiousness": 0.8, "agreeableness": 0.2},
+    },
+    {
         "name": "Empathy",
         "description": "Understanding and sharing the feelings of others",
         "schwartz": {"benevolence": 0.5, "universalism": 0.5},
         "big_five": {"agreeableness": 0.8, "openness": 0.2},
     },
     {
-        "name": "Encouragement",
-        "description": "Supporting and inspiring others to grow and persist",
-        "schwartz": {"benevolence": 0.8, "achievement": 0.2},
-        "big_five": {"agreeableness": 0.7, "extraversion": 0.3},
+        "name": "Enthusiasm",
+        "description": "Bringing eager, animated energy to what I pursue",
+        "schwartz": {"stimulation": 0.5, "achievement": 0.5},
+        "big_five": {"extraversion": 0.7, "emotional_stability": 0.3},
     },
     {
         "name": "Equality",
         "description": "Treating people as equally deserving of dignity and opportunity",
         "schwartz": {"universalism": 1.0},
         "big_five": {"agreeableness": 0.6, "openness": 0.4},
+    },
+    {
+        "name": "Equanimity",
+        "description": "Staying balanced and steady through life's ups and downs",
+        "schwartz": {"tradition": 0.4, "security": 0.3, "universalism": 0.3},
+        "big_five": {"emotional_stability": 0.9, "openness": 0.1},
+    },
+    {
+        "name": "Excellence",
+        "description": "Holding myself to a high standard of quality in what I do",
+        "schwartz": {"achievement": 0.8, "conformity": 0.2},
+        "big_five": {"conscientiousness": 0.8, "openness": 0.2},
     },
     {
         "name": "Excitement",
@@ -198,10 +243,10 @@ VALUES = [
         "big_five": {"openness": 0.7, "extraversion": 0.3},
     },
     {
-        "name": "Friendliness",
-        "description": "Being warm, approachable, and welcoming to others",
-        "schwartz": {"benevolence": 0.6, "hedonism": 0.4},
-        "big_five": {"extraversion": 0.5, "agreeableness": 0.5},
+        "name": "Frugality",
+        "description": "Living thriftily and making careful, deliberate use of resources",
+        "schwartz": {"conformity": 0.4, "security": 0.4, "tradition": 0.2},
+        "big_five": {"conscientiousness": 0.8, "emotional_stability": 0.2},
     },
     {
         "name": "Fun",
@@ -234,16 +279,22 @@ VALUES = [
         "big_five": {"agreeableness": 0.5, "emotional_stability": 0.5},
     },
     {
-        "name": "Helpfulness",
-        "description": "Being of practical use and assistance to others",
-        "schwartz": {"benevolence": 1.0},
-        "big_five": {"agreeableness": 1.0},
+        "name": "Heritage",
+        "description": "Honoring and carrying forward where I come from",
+        "schwartz": {"tradition": 0.6, "security": 0.4},
+        "big_five": {"conscientiousness": 0.5, "agreeableness": 0.5},
     },
     {
         "name": "Honesty",
         "description": "Being truthful and sincere in what I say and do",
         "schwartz": {"benevolence": 0.5, "universalism": 0.3, "self_direction": 0.2},
         "big_five": {"conscientiousness": 0.5, "agreeableness": 0.5},
+    },
+    {
+        "name": "Honor",
+        "description": "Upholding my principles and earning a good name",
+        "schwartz": {"tradition": 0.4, "conformity": 0.3, "power": 0.3},
+        "big_five": {"conscientiousness": 0.6, "agreeableness": 0.4},
     },
     {
         "name": "Hope",
@@ -276,16 +327,16 @@ VALUES = [
         "big_five": {"conscientiousness": 1.0},
     },
     {
+        "name": "Influence",
+        "description": "Shaping outcomes and moving others toward what matters",
+        "schwartz": {"power": 0.7, "achievement": 0.3},
+        "big_five": {"extraversion": 0.7, "conscientiousness": 0.3},
+    },
+    {
         "name": "Integrity",
         "description": "Living in line with my values and being honest with myself",
         "schwartz": {"self_direction": 0.4, "benevolence": 0.3, "universalism": 0.3},
         "big_five": {"conscientiousness": 0.5, "agreeableness": 0.5},
-    },
-    {
-        "name": "Intimacy",
-        "description": "Opening up and sharing myself deeply with others",
-        "schwartz": {"benevolence": 0.7, "hedonism": 0.3},
-        "big_five": {"agreeableness": 0.5, "extraversion": 0.3, "openness": 0.2},
     },
     {
         "name": "Justice",
@@ -298,12 +349,6 @@ VALUES = [
         "description": "Being considerate, gentle, and caring toward others",
         "schwartz": {"benevolence": 1.0},
         "big_five": {"agreeableness": 1.0},
-    },
-    {
-        "name": "Knowledge",
-        "description": "Seeking out and valuing understanding and truth",
-        "schwartz": {"self_direction": 0.6, "universalism": 0.4},
-        "big_five": {"openness": 1.0},
     },
     {
         "name": "Leadership",
@@ -324,22 +369,16 @@ VALUES = [
         "big_five": {"agreeableness": 0.6, "conscientiousness": 0.4},
     },
     {
+        "name": "Mastery",
+        "description": "Pursuing deep competence and command of a craft",
+        "schwartz": {"achievement": 0.7, "power": 0.3},
+        "big_five": {"conscientiousness": 0.6, "openness": 0.4},
+    },
+    {
         "name": "Mindfulness",
         "description": "Being present and aware of the here and now without judgment",
         "schwartz": {"universalism": 0.4, "self_direction": 0.3, "tradition": 0.3},
         "big_five": {"emotional_stability": 0.7, "openness": 0.3},
-    },
-    {
-        "name": "Nurturing",
-        "description": "Helping others and myself to grow, heal, and thrive",
-        "schwartz": {"benevolence": 1.0},
-        "big_five": {"agreeableness": 0.8, "conscientiousness": 0.2},
-    },
-    {
-        "name": "Open-mindedness",
-        "description": "Considering ideas and perspectives other than my own",
-        "schwartz": {"universalism": 0.6, "self_direction": 0.4},
-        "big_five": {"openness": 1.0},
     },
     {
         "name": "Openness",
@@ -396,10 +435,22 @@ VALUES = [
         "big_five": {"emotional_stability": 0.6, "openness": 0.4},
     },
     {
+        "name": "Prudence",
+        "description": "Acting with care, foresight, and good practical judgment",
+        "schwartz": {"conformity": 0.4, "security": 0.4, "self_direction": 0.2},
+        "big_five": {"conscientiousness": 0.7, "emotional_stability": 0.3},
+    },
+    {
         "name": "Reciprocity",
         "description": "Giving and receiving in fair, mutual exchange",
         "schwartz": {"benevolence": 0.5, "conformity": 0.3, "security": 0.2},
         "big_five": {"agreeableness": 0.6, "conscientiousness": 0.4},
+    },
+    {
+        "name": "Recognition",
+        "description": "Earning acknowledgment and respect for my contributions",
+        "schwartz": {"power": 0.5, "achievement": 0.5},
+        "big_five": {"extraversion": 0.6, "conscientiousness": 0.4},
     },
     {
         "name": "Reliability",
@@ -438,12 +489,6 @@ VALUES = [
         "big_five": {"conscientiousness": 0.5, "emotional_stability": 0.5},
     },
     {
-        "name": "Self-awareness",
-        "description": "Knowing my own thoughts, feelings, and motivations",
-        "schwartz": {"self_direction": 0.7, "universalism": 0.3},
-        "big_five": {"openness": 0.6, "emotional_stability": 0.4},
-    },
-    {
         "name": "Self-care",
         "description": "Tending to my own needs and well-being",
         "schwartz": {"hedonism": 0.4, "security": 0.4, "self_direction": 0.2},
@@ -460,12 +505,6 @@ VALUES = [
         "description": "Acting deliberately rather than on impulse",
         "schwartz": {"conformity": 0.6, "security": 0.2, "tradition": 0.2},
         "big_five": {"conscientiousness": 0.7, "emotional_stability": 0.3},
-    },
-    {
-        "name": "Self-development",
-        "description": "Working actively to become who I want to be",
-        "schwartz": {"achievement": 0.5, "self_direction": 0.5},
-        "big_five": {"openness": 0.5, "conscientiousness": 0.5},
     },
     {
         "name": "Self-expression",
@@ -492,22 +531,10 @@ VALUES = [
         "big_five": {"extraversion": 0.5, "openness": 0.5},
     },
     {
-        "name": "Sharing",
-        "description": "Giving and offering what I have with others",
-        "schwartz": {"benevolence": 0.7, "universalism": 0.3},
-        "big_five": {"agreeableness": 1.0},
-    },
-    {
         "name": "Simplicity",
         "description": "Living in an uncluttered, unpretentious way",
         "schwartz": {"tradition": 0.5, "universalism": 0.3, "security": 0.2},
         "big_five": {"conscientiousness": 0.4, "emotional_stability": 0.4, "openness": 0.2},
-    },
-    {
-        "name": "Sincerity",
-        "description": "Being honest and free of pretense in my expression",
-        "schwartz": {"benevolence": 0.5, "self_direction": 0.3, "universalism": 0.2},
-        "big_five": {"agreeableness": 0.6, "conscientiousness": 0.4},
     },
     {
         "name": "Skillfulness",
@@ -540,6 +567,12 @@ VALUES = [
         "big_five": {"conscientiousness": 0.5, "emotional_stability": 0.5},
     },
     {
+        "name": "Status",
+        "description": "Attaining and holding a respected standing among others",
+        "schwartz": {"power": 0.7, "achievement": 0.3},
+        "big_five": {"extraversion": 0.6, "conscientiousness": 0.4},
+    },
+    {
         "name": "Stewardship",
         "description": "Caring responsibly for what is entrusted to me",
         "schwartz": {"universalism": 0.5, "benevolence": 0.3, "conformity": 0.2},
@@ -552,28 +585,10 @@ VALUES = [
         "big_five": {"emotional_stability": 0.5, "conscientiousness": 0.3, "extraversion": 0.2},
     },
     {
-        "name": "Supportiveness",
-        "description": "Being there for others and backing them up",
-        "schwartz": {"benevolence": 1.0},
-        "big_five": {"agreeableness": 0.8, "extraversion": 0.2},
-    },
-    {
-        "name": "Tenderness",
-        "description": "Acting with gentleness and soft-hearted care",
-        "schwartz": {"benevolence": 0.7, "hedonism": 0.3},
-        "big_five": {"agreeableness": 0.8, "emotional_stability": 0.2},
-    },
-    {
-        "name": "Thoughtfulness",
-        "description": "Being considerate and attentive to others' needs",
-        "schwartz": {"benevolence": 0.7, "universalism": 0.3},
-        "big_five": {"agreeableness": 0.7, "conscientiousness": 0.3},
-    },
-    {
-        "name": "Tolerance",
-        "description": "Accepting and respecting differences in others",
-        "schwartz": {"universalism": 1.0},
-        "big_five": {"agreeableness": 0.5, "openness": 0.5},
+        "name": "Tradition",
+        "description": "Honoring the customs, heritage, and practices I have inherited",
+        "schwartz": {"tradition": 1.0},
+        "big_five": {"conscientiousness": 0.6, "agreeableness": 0.4},
     },
     {
         "name": "Trust",
@@ -588,22 +603,10 @@ VALUES = [
         "big_five": {"conscientiousness": 0.6, "agreeableness": 0.4},
     },
     {
-        "name": "Understanding",
-        "description": "Seeking to genuinely grasp others and the world",
-        "schwartz": {"universalism": 0.6, "benevolence": 0.4},
-        "big_five": {"agreeableness": 0.5, "openness": 0.5},
-    },
-    {
         "name": "Vitality",
         "description": "Living with energy, aliveness, and enthusiasm",
         "schwartz": {"stimulation": 0.4, "hedonism": 0.4, "achievement": 0.2},
         "big_five": {"extraversion": 0.6, "emotional_stability": 0.4},
-    },
-    {
-        "name": "Vulnerability",
-        "description": "Allowing myself to be open, seen, and emotionally exposed",
-        "schwartz": {"self_direction": 0.4, "benevolence": 0.4, "hedonism": 0.2},
-        "big_five": {"openness": 0.5, "agreeableness": 0.3, "extraversion": 0.2},
     },
     {
         "name": "Warmth",
@@ -616,12 +619,6 @@ VALUES = [
         "description": "Applying knowledge and experience with good judgment",
         "schwartz": {"universalism": 0.6, "self_direction": 0.4},
         "big_five": {"openness": 0.7, "conscientiousness": 0.3},
-    },
-    {
-        "name": "Wonder",
-        "description": "Remaining open to awe and amazement at life",
-        "schwartz": {"universalism": 0.5, "self_direction": 0.3, "stimulation": 0.2},
-        "big_five": {"openness": 1.0},
     },
     {
         "name": "Zeal",

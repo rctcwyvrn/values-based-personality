@@ -1,0 +1,15 @@
+{# Schwartz emphasis radar. Expects a `radar` geometry dict (see app._radar_geometry). #}
+<svg class="radar" viewBox="0 0 {{ radar.size }} {{ radar.size }}"
+     role="img" aria-label="Schwartz values radar chart">
+  <circle class="radar-rim" cx="{{ radar.center }}" cy="{{ radar.center }}"
+          r="{{ radar.max_r }}"></circle>
+  <circle class="radar-baseline" cx="{{ radar.center }}" cy="{{ radar.center }}"
+          r="{{ radar.baseline_r }}"></circle>
+  {% for ax in radar.axes %}
+  <line class="radar-spoke" x1="{{ radar.center }}" y1="{{ radar.center }}"
+        x2="{{ ax.ex }}" y2="{{ ax.ey }}"></line>
+  <text class="radar-label" x="{{ ax.lx }}" y="{{ ax.ly }}"
+        text-anchor="{{ ax.anchor }}" dominant-baseline="middle">{{ ax.label }}</text>
+  {% endfor %}
+  <polygon class="radar-shape" points="{{ radar.polygon }}"></polygon>
+</svg>

@@ -1,0 +1,15 @@
+.git
+.gitignore
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+tests/
+requirements-dev.txt
+pytest.ini
+shell.nix
+result
+result-*
+.venv/
+*.md
+.DS_Store

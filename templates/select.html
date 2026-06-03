@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Choose your values · Values-Based Personality Test{% endblock %}
+
+{% block content %}
+<section class="intro">
+  <h1>What matters most to you?</h1>
+  <p>
+    Browse the {{ values|length }} values below and build your personal top
+    {{ max_picks }} — in order, with your single most important value first.
+    Click a value to add it; drag your picks to reorder them.
+  </p>
+  {% if error %}<p class="error">{{ error }}</p>{% endif %}
+</section>
+
+<form id="ranker-form" method="get" action="{{ url_for('result') }}">
+  <input type="hidden" name="ranked" id="ranked-input" value="">
+
+  <div class="ranker">
+    <div class="pool-panel">
+      <div class="panel-head">
+        <h2>All values</h2>
+        <input type="search" id="value-filter" placeholder="Filter…" autocomplete="off">
+      </div>
+      <ul class="value-pool" id="value-pool">
+        {% for v in values %}
+        <li class="value-chip" data-name="{{ v.name }}" tabindex="0"
+            title="{{ v.description }}">
+          <span class="chip-name">{{ v.name }}</span>
+          <span class="chip-desc">{{ v.description }}</span>
+        </li>
+        {% endfor %}
+      </ul>
+    </div>
+
+    <div class="picks-panel">
+      <div class="panel-head">
+        <h2>Your top {{ max_picks }}</h2>
+        <span class="pick-count"><span id="pick-count">0</span>/{{ max_picks }}</span>
+      </div>
+      <ol class="picks-list" id="picks-list" data-max="{{ max_picks }}"
+          data-initial="{{ (initial_ranked | default([])) | join(',') }}"
+          aria-label="Your ranked values"></ol>
+      <p class="picks-empty" id="picks-empty">
+        No values chosen yet. Pick the ones that ring true.
+      </p>
+      <button type="submit" class="submit-btn" id="submit-btn" disabled>
+        Reveal my personality
+      </button>
+    </div>
+  </div>
+</form>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/ranker.js') }}"></script>
+{% endblock %}
