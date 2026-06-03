@@ -86,8 +86,13 @@ def _radar_geometry(schwartz: list[dict], size: int = 320, margin: int = 70) -> 
         )
 
     polygon = " ".join(f"{x},{y}" for x, y in points)
+    # Pad the viewBox horizontally so long axis labels (e.g. "Self-Direction"
+    # due east, "Universalism") aren't clipped at the edges. The drawing stays
+    # centred; only the visible box widens.
+    pad = 72
     return {
         "size": size,
+        "view_box": f"{-pad} 0 {size + 2 * pad} {size}",
         "center": center,
         "max_r": max_r,
         "polygon": polygon,

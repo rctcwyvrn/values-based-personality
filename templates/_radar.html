@@ -1,5 +1,5 @@
 {# Schwartz emphasis radar. Expects a `radar` geometry dict (see app._radar_geometry). #}
-<svg class="radar" viewBox="0 0 {{ radar.size }} {{ radar.size }}"
+<svg class="radar" viewBox="{{ radar.view_box }}"
      role="img" aria-label="Schwartz values radar chart">
   <circle class="radar-rim" cx="{{ radar.center }}" cy="{{ radar.center }}"
           r="{{ radar.max_r }}"></circle>
