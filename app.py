@@ -26,10 +26,17 @@ _CSP = (
 
 from personality import (
     ARCHETYPES,
+    anti_resonant_values,
+    archetype_big_five,
     archetype_by_key,
     archetype_geometry,
+    axis_positions,
     build_personality,
+    circle_positions,
+    most_confusable,
+    rarity,
     resonant_values,
+    signature,
 )
 from personality.dimensions import SCHWARTZ, SCHWARTZ_ANGLES, SCHWARTZ_LABELS
 from values import VALUES
@@ -100,6 +107,26 @@ def _radar_geometry(schwartz: list[dict], size: int = 320, margin: int = 70) -> 
         # Reference ring at emphasis == 1.0 (the "average" baseline).
         "baseline_r": round(max_r * (1.0 / RADAR_FULL_SCALE), 1),
     }
+
+
+def _circle_map(highlight_key: str, size: int = 300, pad: int = 30) -> dict:
+    """Geometry for the all-types mini-compass: a dot per archetype by angle."""
+    center = size / 2
+    r = center - pad
+    dots = []
+    for pos in circle_positions():
+        angle = math.radians(pos["angle"])
+        dots.append(
+            {
+                "key": pos["key"],
+                "emoji": pos["emoji"],
+                "name": pos["name"],
+                "x": round(center + r * math.cos(angle), 1),
+                "y": round(center - r * math.sin(angle), 1),
+                "highlight": pos["key"] == highlight_key,
+            }
+        )
+    return {"size": size, "center": center, "r": r, "dots": dots}
 
 
 # Stable id <-> name maps. Each value carries an explicit, frozen ``id`` (see
@@ -249,19 +276,50 @@ def create_app() -> Flask:
         arch = archetype_by_key(key)
         if arch is None:
             abort(404)
-        geometry = archetype_geometry(arch)
-        radar = _radar_geometry(geometry["schwartz"])
         related = {
             "opposite": archetype_by_key(arch["opposite"]),
             "neighbors": [archetype_by_key(k) for k in arch["neighbors"]],
         }
+        return render_template("type.html", arch=arch, related=related)
+
+    @app.route("/types/<key>/science")
+    def archetype_science(key):
+        arch = archetype_by_key(key)
+        if arch is None:
+            abort(404)
+        opposite = archetype_by_key(arch["opposite"])
+        geometry = archetype_geometry(arch)
+        radar = _radar_geometry(geometry["schwartz"])
         return render_template(
-            "type.html",
+            "type_science.html",
             arch=arch,
             geometry=geometry,
             radar=radar,
-            related=related,
             resonant=resonant_values(arch),
+            anti_resonant=anti_resonant_values(arch),
+            signature=signature(arch),
+            big_five=archetype_big_five(arch),
+            axis=axis_positions(arch["schwartz"]),
+            confusable=most_confusable(arch),
+            rarity=rarity(arch),
+            circle=_circle_map(key),
+            faceoff={
+                "opposite": opposite,
+                "self_axis": axis_positions(arch["schwartz"]),
+                "opp_axis": axis_positions(opposite["schwartz"]),
+                "self_top": signature(arch)[0],
+                "opp_top": signature(opposite)[0],
+            },
+        )
+
+    @app.route("/methods")
+    def methods():
+        example = ["Adventure", "Curiosity", "Freedom", "Creativity", "Independence"]
+        profile = build_personality(example)
+        return render_template(
+            "methods.html",
+            example_ranked=example,
+            example_profile=profile,
         )
 
     return app

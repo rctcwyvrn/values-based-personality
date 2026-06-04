@@ -1,5 +1,7 @@
 """Route-level tests for the Flask app."""
 
+import html
+
 import pytest
 
 from app import _encode_ranked
@@ -43,17 +45,73 @@ def test_types_index(client):
 
 
 @pytest.mark.parametrize("arch", ARCHETYPES, ids=[a["key"] for a in ARCHETYPES])
-def test_each_type_page_renders(client, arch):
+def test_each_casual_type_page_renders(client, arch):
     r = client.get(f'/types/{arch["key"]}')
     assert r.status_code == 200
-    assert arch["name"].encode() in r.data
-    # axis framing and related-type links are present
-    assert arch["axis_change"]["pole"].encode() in r.data
-    assert f'/types/{arch["opposite"]}'.encode() in r.data
+    body = html.unescape(r.get_data(as_text=True))
+    assert arch["name"] in body
+    # casual page shows the portrait + recognize, links to related + the science
+    assert arch["portrait"][0][:30] in body
+    assert arch["recognize"][0] in body
+    # the new casual blocks all render
+    assert arch["two_truths"] in body
+    assert arch["thriving"] in body
+    assert arch["empty"] in body
+    assert arch["kryptonite"] in body
+    assert arch["green_flags"][0] in body
+    assert arch["red_flags"][0] in body
+    assert arch["quick_stats"][0]["label"] in body
+    assert "qs-pip on" in body  # at least one filled meter pip
+    assert f'/types/{arch["opposite"]}' in body
+    assert f'/types/{arch["key"]}/science' in body
+
+
+@pytest.mark.parametrize("arch", ARCHETYPES, ids=[a["key"] for a in ARCHETYPES])
+def test_each_science_page_renders(client, arch):
+    r = client.get(f'/types/{arch["key"]}/science')
+    assert r.status_code == 200
+    body = html.unescape(r.get_data(as_text=True))
+    assert arch["name"] in body
+    # the technical content lives here now
+    assert "circumplex" in body
+    assert arch["detail"][0][:30] in body
+    assert arch["axis_change"]["note"][:30] in body
+    # the new A/B/C sections all render
+    assert "Motivational signature" in body
+    assert "Big Five signature" in body
+    assert "Where it sits on the two axes" in body
+    assert "Values that pull away" in body
+    assert "Where it sits among all ten" in body  # all-types compass
+    assert "of random value-rankings land here" in body  # rarity stat
+    assert "most blended with" in body  # confusable stat
+    assert "vs" in body  # faceoff heading
+    assert "/methods" in body  # link to methodology
+    # links back to the casual page
+    assert f'/types/{arch["key"]}"' in body
+
+
+def test_methods_page_renders(client):
+    body = html.unescape(client.get("/methods").get_data(as_text=True))
+    assert "How this test works" in body
+    assert "Acceptance and Commitment Therapy" in body  # pipeline step 1
+    assert "Glossary" in body
+    assert "The research behind it" in body  # citations
+    assert "Schwartz, S. H. (1992)" in body
+    assert "A worked example" in body
+    # nav link present site-wide
+    assert "/methods" in body
+
+
+def test_nav_has_methods_link(client):
+    assert "/methods" in client.get("/").get_data(as_text=True)
 
 
 def test_unknown_type_404(client):
     assert client.get("/types/not-a-type").status_code == 404
+
+
+def test_unknown_science_page_404(client):
+    assert client.get("/types/not-a-type/science").status_code == 404
 
 
 def test_result_from_url_links_to_type_page(client):

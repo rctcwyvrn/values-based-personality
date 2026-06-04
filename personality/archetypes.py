@@ -26,6 +26,31 @@ ARCHETYPES = [
         "name": "The Explorer",
         "emoji": "🧭",
         "tagline": "Driven by novelty, freedom, and the next horizon",
+        "two_truths": "You're the most fun person to make plans with and the least likely to keep them exactly as planned.",
+        "thriving": "You're pure momentum: trying things, meeting people, dragging the group toward something better than the original plan.",
+        "empty": "You're restless and scattered, starting six things to dodge finishing one and chasing the next hit of new.",
+        "kryptonite": "A meeting that could've been an email, and a calendar with zero white space.",
+        "green_flags": ["Up for anything, last-minute", "Makes the ordinary feel like an adventure", "Genuinely curious about you"],
+        "red_flags": ["Vanishes the moment things get routine", "Commitment makes them twitchy", "Always has one foot out the door"],
+        "quick_stats": [
+            {"label": "Spontaneity", "level": 5},
+            {"label": "Follow-through", "level": 2},
+            {"label": "Wanderlust", "level": 5},
+        ],
+        "portrait": [
+            "You're the one who says \"let's just go\" before anyone's checked "
+            "the forecast. New places, new people, new ideas, you're in. The "
+            "only thing that genuinely unsettles you is standing still.",
+            "Plans are loose suggestions and comfort zones are for other "
+            "people. You'd rather try and fumble than sit around wondering "
+            "\"what if,\" and life is basically a pile of experiences waiting "
+            "to be had.",
+        ],
+        "recognize": [
+            "You've booked the trip first and figured out the details later.",
+            "An empty weekend feels like an invitation, not a void.",
+            "Routine starts to itch after about a week.",
+        ],
         "schwartz": {"stimulation": 0.45, "self_direction": 0.35, "hedonism": 0.20},
         "big_five_hint": "high Openness and Extraversion",
         "axis_change": {
@@ -52,7 +77,7 @@ ARCHETYPES = [
             "choose your own path and fill it with new experience. Constraint, "
             "repetition, and other people's rulebooks drain you faster than "
             "almost anything else.",
-            "On the self-focus axis you're roughly balanced: you're not"
+            "On the self-focus axis you're roughly balanced: you're not "
             "chasing dominance or status, and you're not primarily organised "
             "around serving others either. The point is the experience itself. "
             "That makes you a natural first-mover: you'll try the thing, go to "
@@ -77,6 +102,31 @@ ARCHETYPES = [
         "name": "The Creator",
         "emoji": "🎨",
         "tagline": "Compelled to make, express, and originate",
+        "two_truths": "You're bursting with ideas and quietly terrified that none of them are good enough.",
+        "thriving": "You're in flow, making and shaping and losing track of time, leaving the world a little more beautiful than you found it.",
+        "empty": "You're blocked and self-critical, measuring your rough drafts against everyone else's highlight reels.",
+        "kryptonite": "A blank template, a committee, and the words 'just keep it standard.'",
+        "green_flags": ["Sees the version of things that doesn't exist yet", "Makes you feel like a muse", "Brings beauty to the boring stuff"],
+        "red_flags": ["Disappears into the work for days", "Takes feedback as a personal verdict", "Allergic to 'because that's how it's done'"],
+        "quick_stats": [
+            {"label": "Imagination", "level": 5},
+            {"label": "Tolerance for rules", "level": 2},
+            {"label": "Finishing things", "level": 3},
+        ],
+        "portrait": [
+            "You see the version of things that doesn't exist yet, and it bugs "
+            "you until you make it real. Hand you a blank page, an empty room, "
+            "a half-formed idea, and you'll turn it into something with your "
+            "fingerprints all over it.",
+            "You're not chasing applause; the making is the point. What you "
+            "can't stand is being boxed in, handed a template, or told there's "
+            "only one right way to do it.",
+        ],
+        "recognize": [
+            "You've got three half-finished projects and ideas for ten more.",
+            "\"Just follow the instructions\" makes your eye twitch.",
+            "You notice when something is ugly, and you can't quite let it go.",
+        ],
         "schwartz": {"self_direction": 0.6, "stimulation": 0.2, "universalism": 0.2},
         "big_five_hint": "very high Openness",
         "axis_change": {
@@ -102,7 +152,7 @@ ARCHETYPES = [
             "circle, but where they chase experience, you chase expression. "
             "Self-direction is your dominant value: the freedom to imagine and "
             "to make is non-negotiable. A streak of universalism gives your "
-            "work a reach beyond yourself. You want what you make to matter"
+            "work a reach beyond yourself. You want what you make to matter "
             "and to be beautiful.",
             "That blend puts you slightly toward Self-Transcendence on the "
             "focus axis. You're rarely motivated by control or recognition for "
@@ -129,6 +179,30 @@ ARCHETYPES = [
         "name": "The Sage",
         "emoji": "🦉",
         "tagline": "Seeking understanding, truth, and perspective",
+        "two_truths": "You're the calmest head in the room and the slowest to say what you actually feel.",
+        "thriving": "You're clear and unflappable, the one who cuts through the noise and says the true thing simply.",
+        "empty": "You retreat into your head, analysing instead of acting and calling the distance objectivity.",
+        "kryptonite": "Being rushed to a hot take before you've had time to think.",
+        "green_flags": ["Listens more than they talk", "Won't fake certainty they don't have", "Changes their mind when the facts do"],
+        "red_flags": ["Lives in the library, skips the party", "Hard to read emotionally", "Can analyse the feeling right out of a moment"],
+        "quick_stats": [
+            {"label": "Depth", "level": 5},
+            {"label": "Patience for nonsense", "level": 1},
+            {"label": "Composure", "level": 5},
+        ],
+        "portrait": [
+            "You want to actually understand things, not the headline, the "
+            "whole picture. While everyone else is busy reacting, you're the "
+            "one quietly asking \"okay, but is that really true?\"",
+            "You take your time, weigh the sides, and you're hard to stampede. "
+            "People come to you when they need a clear head and an honest read, "
+            "not a hot take.",
+        ],
+        "recognize": [
+            "You've fallen down a research rabbit hole just to be sure.",
+            "You're comfortable saying \"it's complicated\" and meaning it.",
+            "Snap judgments make you a little uneasy.",
+        ],
         "schwartz": {"universalism": 0.5, "self_direction": 0.5},
         "big_five_hint": "high Openness with reflective calm",
         "axis_change": {
@@ -179,6 +253,31 @@ ARCHETYPES = [
         "name": "The Caregiver",
         "emoji": "🤲",
         "tagline": "Devoted to nurturing and protecting others",
+        "two_truths": "You're the first to notice everyone else's needs and the last to admit your own.",
+        "thriving": "You're warm and steady, the safe place people come back to, giving freely and feeling full.",
+        "empty": "You over-give until you're hollow, then quietly resent that nobody thought to refill the cup.",
+        "kryptonite": "Watching someone you love struggle and not being allowed to help.",
+        "green_flags": ["Shows up when it actually counts", "Remembers the small stuff", "Makes people feel safe"],
+        "red_flags": ["Says 'I'm fine' on an empty tank", "Loyal past their own breaking point", "Bad at letting you give back"],
+        "quick_stats": [
+            {"label": "Warmth", "level": 5},
+            {"label": "Saying no", "level": 1},
+            {"label": "Reliability", "level": 5},
+        ],
+        "portrait": [
+            "You're the one who notices the person going quiet at the table. "
+            "Other people's wellbeing isn't a side quest for you, it's the "
+            "whole map. You show up, you follow through, and people feel safe "
+            "around you.",
+            "You measure a good day by who you helped. The catch is that your "
+            "own name tends to slide to the bottom of the list, and you'll "
+            "stay loyal long after you should have tapped out.",
+        ],
+        "recognize": [
+            "You've checked on someone before checking on yourself.",
+            "\"I'm fine, don't worry about me\" is basically your catchphrase.",
+            "You remember everyone's little things: the coffee order, the bad week.",
+        ],
         "schwartz": {"benevolence": 0.8, "universalism": 0.2},
         "big_five_hint": "very high Agreeableness",
         "axis_change": {
@@ -231,6 +330,30 @@ ARCHETYPES = [
         "name": "The Connector",
         "emoji": "🫂",
         "tagline": "Alive in warmth, closeness, and shared joy",
+        "two_truths": "You can talk to anyone, and you'll dodge the one hard conversation that actually matters.",
+        "thriving": "You're the social glue, lighting up rooms and turning a handful of strangers into a group that lasts.",
+        "empty": "You're spread thin and people-pleasing, keeping everyone happy while nobody notices you're not.",
+        "kryptonite": "Tension you can't smooth over, and a long stretch of being alone.",
+        "green_flags": ["Makes everyone feel included", "Remembers your birthday and your dog's name", "Brings the energy"],
+        "red_flags": ["Avoids conflict until it festers", "Says yes to everyone, themselves last", "Goes quiet about their own needs"],
+        "quick_stats": [
+            {"label": "Charm", "level": 5},
+            {"label": "Comfort with conflict", "level": 2},
+            {"label": "Group chats", "level": 5},
+        ],
+        "portrait": [
+            "You turn a handful of people into a group. You clock who's on the "
+            "edge of the circle and pull them in, and somehow the gathering "
+            "doesn't really start until you arrive.",
+            "Closeness is your fuel, and it's supposed to feel good, not "
+            "dutiful. Your one real blind spot is smoothing things over so "
+            "everyone stays happy, even when something needs to be said.",
+        ],
+        "recognize": [
+            "You're the one who actually organizes the reunion.",
+            "A good long catch-up recharges you more than a nap.",
+            "You'd usually rather keep the peace than win the point.",
+        ],
         "schwartz": {"benevolence": 0.5, "hedonism": 0.3, "stimulation": 0.2},
         "big_five_hint": "high Extraversion and Agreeableness",
         "axis_change": {
@@ -280,6 +403,30 @@ ARCHETYPES = [
         "name": "The Guardian",
         "emoji": "🛡️",
         "tagline": "Anchored in stability, duty, and dependability",
+        "two_truths": "You're the most reliable person in the room and the one quietly craving a single unplanned weekend.",
+        "thriving": "You're the steady ground everyone stands on, calm, prepared, holding it all together without being asked.",
+        "empty": "You white-knuckle the routine, treating every change as a threat and every risk as reckless.",
+        "kryptonite": "A plan that changes at the last minute for no good reason.",
+        "green_flags": ["Does exactly what they said they'd do", "Calm when everything's on fire", "Always has the spare charger"],
+        "red_flags": ["Mistakes a new idea for an attack", "Defaults to 'we've always done it this way'", "Slow to loosen the grip"],
+        "quick_stats": [
+            {"label": "Dependability", "level": 5},
+            {"label": "Love of surprises", "level": 1},
+            {"label": "Crisis composure", "level": 5},
+        ],
+        "portrait": [
+            "You're the person everyone secretly relies on. If you said you'd "
+            "do it, it's done. While other people chase the new shiny thing, "
+            "you're busy keeping the lights on and the ship steady.",
+            "Calm in a crisis, loyal to a fault, allergic to chaos. Your "
+            "growth edge: not every rule is sacred, and not every change is a "
+            "threat. Sometimes the steady move is to bend.",
+        ],
+        "recognize": [
+            "You've got a backup plan for the backup plan.",
+            "People hand you the keys because you won't lose them.",
+            "Last-minute changes make your jaw tighten.",
+        ],
         "schwartz": {"security": 0.4, "conformity": 0.3, "tradition": 0.3},
         "big_five_hint": "high Conscientiousness with steady calm",
         "axis_change": {
@@ -331,6 +478,31 @@ ARCHETYPES = [
         "name": "The Achiever",
         "emoji": "🏆",
         "tagline": "Striving toward mastery, results, and influence",
+        "two_truths": "You make it all look effortless and you're worn out from how much effort it actually takes.",
+        "thriving": "You're unstoppable, clear goals and high standards turning ambition into things that actually get done.",
+        "empty": "You pin your whole worth to the scoreboard and can't sit still long enough to enjoy the win.",
+        "kryptonite": "Coming second, and being told to 'just relax.'",
+        "green_flags": ["Gets things done", "Roots for you to level up too", "Owns it when it's on them"],
+        "red_flags": ["Can't switch off the scoreboard", "Steamrolls slower people", "Treats worth as win rate"],
+        "quick_stats": [
+            {"label": "Drive", "level": 5},
+            {"label": "Off switch", "level": 2},
+            {"label": "Standards", "level": 5},
+        ],
+        "portrait": [
+            "You set the bar high and then clear it. Goals don't stress you "
+            "out, they switch you on. You like being good at things, and you "
+            "like making things happen.",
+            "You take ownership when others hesitate and you don't flinch at a "
+            "target. Just watch the scoreboard trap: your worth isn't the same "
+            "as your win rate, and the people around you matter more than the "
+            "next milestone.",
+        ],
+        "recognize": [
+            "You've turned a hobby into a leaderboard.",
+            "\"Good enough\" rarely feels good enough.",
+            "You measure the year by what you actually pulled off.",
+        ],
         "schwartz": {"achievement": 0.6, "power": 0.4},
         "big_five_hint": "high Conscientiousness and Extraversion",
         "axis_change": {
@@ -352,7 +524,7 @@ ARCHETYPES = [
             "life around."
         ),
         "detail": [
-            "You anchor the Self-Enhancement pole: achievement (demonstrated"
+            "You anchor the Self-Enhancement pole: achievement (demonstrated "
             "competence) paired with power (influence and the ability to shape "
             "outcomes). You set goals, measure progress, and take ownership of "
             "results. On the change axis you're pragmatic: you'll innovate or "
@@ -382,6 +554,33 @@ ARCHETYPES = [
         "name": "The Idealist",
         "emoji": "⚖️",
         "tagline": "Fighting for justice, fairness, and a better world",
+        "two_truths": "You'd fix the whole world if you could, and it quietly breaks your heart that you can't.",
+        "thriving": "You're a conscience with momentum, naming what's wrong and pulling people toward something better.",
+        "empty": "You're disillusioned and heavy, carrying problems too big to hold and judging anyone who looks away.",
+        "kryptonite": "Unfairness you can see clearly and can't do anything about.",
+        "green_flags": ["Stands up for people who can't", "Means every word about fairness", "Cares well past their own front door"],
+        "red_flags": ["The moral high ground gets crowded up there", "Burns out on caring", "Can mistake disagreement for villainy"],
+        "quick_stats": [
+            {"label": "Conviction", "level": 5},
+            {"label": "Letting it go", "level": 1},
+            {"label": "Sense of justice", "level": 5},
+        ],
+        "portrait": [
+            "You can't un-see unfairness. While others shrug and move on, "
+            "you're the one who says \"wait, that's not right\" and means it. "
+            "The world as it could be is always a little louder in your head "
+            "than the world as it is.",
+            "You care way past your own front door: about people you'll never "
+            "meet, about the planet, about the principle of the thing. Just "
+            "don't let the gap between what is and what should be grind you "
+            "down, or let conviction harden into judging everyone who isn't "
+            "there yet.",
+        ],
+        "recognize": [
+            "You've gotten heated about something that doesn't even affect you.",
+            "\"That's just how it is\" is not an answer you accept.",
+            "You feel the world's problems a little too personally.",
+        ],
         "schwartz": {"universalism": 0.7, "benevolence": 0.3},
         "big_five_hint": "high Openness and Agreeableness",
         "axis_change": {
@@ -433,6 +632,31 @@ ARCHETYPES = [
         "name": "The Seeker",
         "emoji": "🧘",
         "tagline": "Grounded in meaning, faith, and inner depth",
+        "two_truths": "You're deeply at peace and quietly restless for something you can't quite name.",
+        "thriving": "You're grounded and present, unshaken by the noise because you're tuned to something deeper.",
+        "empty": "You drift from the practical world, mistaking detachment for wisdom and certainty for peace.",
+        "kryptonite": "Small talk, fluorescent lights, and a life with no room to breathe.",
+        "green_flags": ["Genuinely present with you", "Unbothered by petty drama", "Asks the questions that matter"],
+        "red_flags": ["Floats above the practical stuff", "Can get rigid about their beliefs", "Hard to pin down for plans"],
+        "quick_stats": [
+            {"label": "Inner calm", "level": 5},
+            {"label": "Patience for small talk", "level": 1},
+            {"label": "Depth", "level": 5},
+        ],
+        "portrait": [
+            "You're after something deeper than the daily noise. Meaning, "
+            "stillness, a sense of something bigger, that's the thread you're "
+            "always following. Surface drama rolls off you because you're "
+            "tuned to a longer frequency.",
+            "You bring a groundedness that's rare and quietly steadying to be "
+            "around. The trick is staying plugged into the ordinary, practical "
+            "world too, and holding your beliefs with open hands.",
+        ],
+        "recognize": [
+            "You've wandered off to be alone with your thoughts on purpose.",
+            "Small talk drains you; the 3am conversation lights you up.",
+            "You ask \"but what's it all for?\" more than most.",
+        ],
         "schwartz": {"tradition": 0.6, "universalism": 0.2, "self_direction": 0.2},
         "big_five_hint": "openness paired with emotional steadiness",
         "axis_change": {
@@ -484,6 +708,31 @@ ARCHETYPES = [
         "name": "The Free Spirit",
         "emoji": "🦋",
         "tagline": "Living for joy, spontaneity, and the present",
+        "two_truths": "You're the best night out anyone's had and the worst person to ask about the schedule.",
+        "thriving": "You're pure aliveness, present and playful, the reason an ordinary evening turns into a story.",
+        "empty": "You dodge anything dull or hard, chasing the next good feeling while the boring bits pile up.",
+        "kryptonite": "A color-coded calendar and a room full of people taking themselves too seriously.",
+        "green_flags": ["Makes everything more fun", "Fully present in the moment", "Gives you permission to lighten up"],
+        "red_flags": ["Allergic to admin and follow-through", "Bolts when things get heavy", "Treats plans as loose suggestions"],
+        "quick_stats": [
+            {"label": "Fun", "level": 5},
+            {"label": "Admin energy", "level": 1},
+            {"label": "Living in the now", "level": 5},
+        ],
+        "portrait": [
+            "You're here for the good stuff, right now. Play, pleasure, "
+            "spontaneity, not guilty pleasures, just the point. You give "
+            "everyone around you quiet permission to lighten up.",
+            "Your joy is contagious and you're rarely the one sweating the "
+            "schedule. The flip side: a little structure goes a long way, and "
+            "the good times last longer when someone (occasionally you) "
+            "handles the boring bits.",
+        ],
+        "recognize": [
+            "You've said yes to the fun thing and dealt with the fallout later.",
+            "A color-coded calendar feels like a tiny prison.",
+            "You're often the reason the night got better.",
+        ],
         "schwartz": {"hedonism": 0.5, "stimulation": 0.5},
         "big_five_hint": "high Extraversion and Openness",
         "axis_change": {

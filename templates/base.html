@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,13 +14,15 @@
   {% endblock %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 </head>
+
 <body>
   <header class="site-header">
     <a class="brand" href="{{ url_for('index') }}">Values-Based&nbsp;Personality&nbsp;Test</a>
-    <p class="tagline">Rank what you value. Discover who that makes you.</p>
+    <p class="tagline">Rank what you value, discover who that makes you.</p>
     <nav class="site-nav">
       <a href="{{ url_for('index') }}">Take the test</a>
       <a href="{{ url_for('types') }}">The 10 types</a>
+      <a href="{{ url_for('methods') }}">How it works</a>
     </nav>
   </header>
 
@@ -33,4 +36,5 @@
 
   {% block scripts %}{% endblock %}
 </body>
+
 </html>

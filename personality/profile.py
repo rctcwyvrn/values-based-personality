@@ -13,6 +13,7 @@ Pipeline:
 from __future__ import annotations
 
 import math
+import random
 
 from values import VALUES
 
@@ -145,19 +146,139 @@ def archetype_geometry(arch: dict) -> dict:
     }
 
 
-def resonant_values(arch: dict, n: int = 8) -> list[str]:
-    """The values most aligned with an archetype, by Schwartz emphasis cosine.
-
-    Surfaces, from the 100-value list, which values point most strongly toward
-    this type — so a type page can show "values that lead here".
-    """
+def _value_resonance(arch: dict) -> list[tuple[str, float]]:
+    """All values scored by cosine alignment to an archetype, best first."""
     target = _schwartz_emphasis_of(arch["schwartz"])
     scored = [
         (v["name"], _cosine(_schwartz_emphasis_of(v["schwartz"]), target, SCHWARTZ))
         for v in VALUES
     ]
     scored.sort(key=lambda t: t[1], reverse=True)
-    return [name for name, _ in scored[:n]]
+    return scored
+
+
+def resonant_values(arch: dict, n: int = 8) -> list[str]:
+    """The values most aligned with an archetype ("values that lead here")."""
+    return [name for name, _ in _value_resonance(arch)[:n]]
+
+
+def anti_resonant_values(arch: dict, n: int = 6) -> list[str]:
+    """The values *least* aligned with an archetype ("values that pull away")."""
+    return [name for name, _ in reversed(_value_resonance(arch)[-n:])]
+
+
+def signature(arch: dict) -> list[dict]:
+    """The archetype's raw prototype weights as labelled percentages."""
+    items = sorted(arch["schwartz"].items(), key=lambda kv: kv[1], reverse=True)
+    return [
+        {"key": k, "label": SCHWARTZ_LABELS[k], "pct": round(w * 100)}
+        for k, w in items
+    ]
+
+
+def axis_positions(schwartz: dict[str, float]) -> dict[str, float]:
+    """Position on each bipolar axis as a fraction in [0, 1].
+
+    change: 0 = pure Conservation, 1 = pure Openness to Change.
+    focus:  0 = pure Self-Transcendence, 1 = pure Self-Enhancement.
+    """
+    g = lambda k: schwartz.get(k, 0.0)  # noqa: E731
+    # Hedonism sits on the Openness side of the circle, so it counts toward the
+    # change axis but is left out of the focus axis (where it would wrongly read
+    # as self-enhancement).
+    openness = g("self_direction") + g("stimulation") + g("hedonism")
+    conservation = g("security") + g("conformity") + g("tradition")
+    enhancement = g("achievement") + g("power")
+    transcendence = g("benevolence") + g("universalism")
+
+    def frac(a: float, b: float) -> float:
+        total = a + b
+        return 0.5 if total == 0 else a / total
+
+    return {
+        "change": frac(openness, conservation),
+        "focus": frac(enhancement, transcendence),
+    }
+
+
+def archetype_big_five(arch: dict, n: int = 12) -> list[dict]:
+    """A full five-trait Big Five profile for an archetype.
+
+    Derived the same way a user's is: average the Big Five loadings of the
+    values that most resonate with this type, normalise against the baseline,
+    and sharpen. Returns all five traits, sorted, with band labels.
+    """
+    raw = {k: 0.0 for k in BIG_FIVE}
+    for name in resonant_values(arch, n):
+        for k, load in _BY_NAME[name]["big_five"].items():
+            raw[k] += load
+    total = sum(raw.values()) or 1.0
+    raw = {k: v / total for k, v in raw.items()}
+    return describe_big_five(_sharpen(_emphasis(raw, _BASELINE["big_five"])))
+
+
+def most_confusable(arch: dict) -> dict:
+    """The other archetype this one is most easily blended with."""
+    target = _sharpen(_archetype_emphasis(arch["schwartz"]))
+    best = None
+    for other in ARCHETYPES:
+        if other["key"] == arch["key"]:
+            continue
+        sim = _cosine(target, _sharpen(_archetype_emphasis(other["schwartz"])), SCHWARTZ)
+        if best is None or sim > best[1]:
+            best = (other, sim)
+    return {"archetype": best[0], "similarity": round(best[1] * 100)}
+
+
+def circle_positions() -> list[dict]:
+    """Compass angle of every archetype, for the all-types mini-map."""
+    out = []
+    for a in ARCHETYPES:
+        emph = _sharpen(_schwartz_emphasis_of(a["schwartz"]))
+        out.append(
+            {
+                "key": a["key"],
+                "name": a["name"],
+                "emoji": a["emoji"],
+                "angle": compass_coords(emph)["angle"],
+            }
+        )
+    return out
+
+
+_RARITY_CACHE: dict[str, float] = {}
+
+
+def _rarity_table(trials: int = 4000, seed: int = 20240601) -> dict[str, float]:
+    """Fraction of random value-rankings that land on each archetype.
+
+    A seeded Monte-Carlo estimate, computed once and cached. Lazy so it costs
+    nothing until a science page is first viewed.
+    """
+    if not _RARITY_CACHE:
+        rng = random.Random(seed)
+        names = [v["name"] for v in VALUES]
+        counts = {a["key"]: 0 for a in ARCHETYPES}
+        for _ in range(trials):
+            k = rng.randint(5, 10)
+            pick = rng.sample(names, k)
+            counts[build_personality(pick)["classification"]["primary"]["key"]] += 1
+        _RARITY_CACHE.update({k: v / trials for k, v in counts.items()})
+    return _RARITY_CACHE
+
+
+def rarity(arch: dict) -> dict:
+    """How common this archetype is among random rankings, with a tier label."""
+    pct = _rarity_table()[arch["key"]] * 100
+    if pct >= 15:
+        tier = "common"
+    elif pct >= 8:
+        tier = "fairly common"
+    elif pct >= 4:
+        tier = "uncommon"
+    else:
+        tier = "rare"
+    return {"pct": round(pct, 1), "tier": tier}
 
 
 def classify(schwartz_emphasis: dict[str, float]) -> dict:

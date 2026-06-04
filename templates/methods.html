@@ -1,0 +1,116 @@
+{% extends "base.html" %}
+{% block title %}How it works · Values-Based Personality Test{% endblock %}
+
+{% block content %}
+<section class="intro">
+  <h1>How this test works</h1>
+  <p>
+    No magic, no horoscopes. Your ranked values run through a short, transparent
+    pipeline grounded in decades of personality and values research. Here's the
+    whole thing, start to finish.
+  </p>
+</section>
+
+{# --- D10: methodology deep-dive --- #}
+<ol class="pipeline">
+  <li>
+    <h3>1 · Start with values</h3>
+    <p>
+      The 100 values come from <strong>Acceptance and Commitment Therapy</strong>,
+      where a value is a freely chosen direction for living, not a goal to tick
+      off. You rank the ones that matter most.
+    </p>
+  </li>
+  <li>
+    <h3>2 · Weight by rank</h3>
+    <p>
+      Earlier picks count for more. Your #1 carries the most weight and the last
+      the least, so the result leans on what you care about most without ignoring
+      the rest.
+    </p>
+  </li>
+  <li>
+    <h3>3 · Score against average</h3>
+    <p>
+      Each value maps onto the ten <strong>Schwartz basic values</strong>. Your
+      scores are compared to what an average selection would produce, so the
+      reading reflects what's <em>distinctive</em> about your choices rather than
+      what's simply common.
+    </p>
+  </li>
+  <li>
+    <h3>4 · Sharpen the picture</h3>
+    <p>
+      The profile is gently exaggerated so real peaks and valleys stand out,
+      turning a flat average into a recognisable shape.
+    </p>
+  </li>
+  <li>
+    <h3>5 · Match to the nearest type</h3>
+    <p>
+      Your profile is compared to each of the ten archetypes' signatures, and the
+      closest match becomes your type. A close call between two becomes a blend.
+    </p>
+  </li>
+  <li>
+    <h3>6 · Translate to the Big Five</h3>
+    <p>
+      The same profile is expressed in <strong>Big Five (OCEAN)</strong> traits,
+      so your result reads in familiar personality language.
+    </p>
+  </li>
+</ol>
+
+{# --- D13: worked example --- #}
+{% set ex = example_profile.classification.primary %}
+<section class="card worked-example">
+  <h2>A worked example</h2>
+  <p class="card-sub">Watch a ranking become a type.</p>
+  <p>
+    Someone ranks
+    {% for name in example_ranked %}<span class="ex-chip">{{ name }}</span>{% endfor %}
+  </p>
+  <p>
+    Those choices lean hard on
+    <strong>{{ example_profile.schwartz[0].label }}</strong> and
+    <strong>{{ example_profile.schwartz[1].label }}</strong>, score
+    <strong>{{ example_profile.big_five[0].label }}</strong> well above average,
+    and land closest to the {{ ex.emoji }} <strong>{{ ex.name }}</strong> signature.
+  </p>
+  <p class="ex-result">→ {{ ex.emoji }} {{ ex.name }}</p>
+</section>
+
+{# --- D11: glossary --- #}
+<section class="card glossary-card">
+  <h2>Glossary</h2>
+  <dl class="glossary">
+    <dt>Value</dt>
+    <dd>A chosen direction for how you want to live and act (compassion, curiosity, courage), not a goal you complete.</dd>
+    <dt>Schwartz circumplex</dt>
+    <dd>Ten basic human values arranged in a circle, where neighbours are compatible and opposite values conflict.</dd>
+    <dt>Emphasis</dt>
+    <dd>How strongly a motivation shows up in your choices compared to an average selection. 1.0× is exactly average.</dd>
+    <dt>Big Five</dt>
+    <dd>The five broad personality traits (Openness, Conscientiousness, Extraversion, Agreeableness, Emotional Stability), the most validated model in personality science.</dd>
+    <dt>Archetype</dt>
+    <dd>One of ten personality types, each defined by a distinct signature of motivations.</dd>
+  </dl>
+</section>
+
+{# --- D12: citations --- #}
+<section class="card citations-card">
+  <h2>The research behind it</h2>
+  <ul class="citations">
+    <li>Schwartz, S. H. (1992). <em>Universals in the content and structure of values.</em> The theory of basic human values and the circumplex.</li>
+    <li>Costa, P. T., &amp; McCrae, R. R. (1992). <em>The Revised NEO Personality Inventory.</em> The Big Five / Five-Factor Model.</li>
+    <li>Hayes, S. C., Strosahl, K., &amp; Wilson, K. G. (1999). <em>Acceptance and Commitment Therapy.</em> Values as chosen life directions.</li>
+    <li>Roccas, S., Sagiv, L., Schwartz, S. H., &amp; Knafo, A. (2002). <em>The Big Five personality factors and personal values.</em> How values and traits relate.</li>
+  </ul>
+  <p class="disclaimer">
+    This is a reflective tool for self-understanding, not a clinical or
+    diagnostic instrument.
+  </p>
+</section>
+
+<p class="redo"><a href="{{ url_for('index') }}">Take the test →</a></p>
+{% endblock %}

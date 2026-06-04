@@ -1,0 +1,188 @@
+{% extends "base.html" %}
+{% block title %}{{ arch.name }} · The science · Values-Based Personality Test{% endblock %}
+
+{% block head_meta %}
+<meta property="og:site_name" content="Values-Based Personality Test">
+<meta property="og:title" content="The science behind {{ arch.name }}">
+<meta property="og:description" content="Where {{ arch.name }} sits on the Schwartz circumplex and the Big Five.">
+<meta property="og:type" content="article">
+<meta name="twitter:card" content="summary">
+{% endblock %}
+
+{% block content %}
+<p class="breadcrumb">
+  <a href="{{ url_for('archetype', key=arch.key) }}">← {{ arch.emoji }} {{ arch.name }}</a>
+</p>
+
+<section class="type-hero">
+  <p class="eyebrow">The science behind</p>
+  <h1 class="archetype-name">{{ arch.name }}</h1>
+  <p class="archetype-tagline">
+    Where this type sits on the Schwartz values circumplex and the Big Five.
+  </p>
+</section>
+
+{# --- B5 + B6: headline stats --- #}
+<section class="stat-strip">
+  <div class="stat-box">
+    <span class="stat-num">{{ rarity.pct }}%</span>
+    <span class="stat-label">of random value-rankings land here</span>
+    <span class="stat-tier">{{ rarity.tier }}</span>
+  </div>
+  <div class="stat-box">
+    <span class="stat-num">{{ confusable.similarity }}%</span>
+    <span class="stat-label">most blended with</span>
+    <a class="stat-tier" href="{{ url_for('archetype_science', key=confusable.archetype.key) }}">
+      {{ confusable.archetype.emoji }} {{ confusable.archetype.name }}
+    </a>
+  </div>
+</section>
+
+{# --- A1: axis sliders --- #}
+<section class="card axis-sliders-card">
+  <h2>Where it sits on the two axes</h2>
+  <div class="axis-slider">
+    <div class="axis-ends"><span>Conservation</span><span>Openness to Change</span></div>
+    <div class="slider-track"><span class="slider-dot" style="left: {{ (axis.change * 100) | round(1) }}%;"></span></div>
+    <p class="axis-note">{{ arch.axis_change.note }}</p>
+  </div>
+  <div class="axis-slider">
+    <div class="axis-ends"><span>Self-Transcendence</span><span>Self-Enhancement</span></div>
+    <div class="slider-track"><span class="slider-dot" style="left: {{ (axis.focus * 100) | round(1) }}%;"></span></div>
+    <p class="axis-note">{{ arch.axis_focus.note }}</p>
+  </div>
+</section>
+
+<div class="result-grid">
+  {# --- A2: motivational signature --- #}
+  <section class="card">
+    <h2>Motivational signature</h2>
+    <p class="card-sub">The exact recipe that defines this type.</p>
+    <ul class="bar-list">
+      {% for s in signature %}
+      <li class="bar-row">
+        <span class="bar-label">{{ s.label }}</span>
+        <span class="bar-track">
+          <span class="bar-fill band-quadrant" style="width: {{ s.pct }}%;"></span>
+        </span>
+        <span class="bar-value">{{ s.pct }}%</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {# --- radar --- #}
+  <section class="card radar-card">
+    <h2>On the circumplex</h2>
+    <p class="card-sub">How far each motivation reaches past average.</p>
+    {% include "_radar.html" %}
+  </section>
+</div>
+
+{# --- A3: full Big Five --- #}
+<section class="card">
+  <h2>Big Five signature</h2>
+  <p class="card-sub">All five traits, translated from this type's motivations.</p>
+  <ul class="bar-list">
+    {% for t in big_five %}
+    <li class="bar-row">
+      <span class="bar-label">{{ t.label }}</span>
+      <span class="bar-track">
+        <span class="bar-fill band-{{ t.band }}" style="width: {{ [t.emphasis / 3.5 * 100, 100] | min | round(1) }}%;"></span>
+      </span>
+      <span class="bar-value">{{ t.emphasis | round(1) }}×</span>
+    </li>
+    {% endfor %}
+  </ul>
+</section>
+
+{# --- the analytical write-up --- #}
+<section class="card type-detail-card">
+  <h2>The full breakdown</h2>
+  {% for para in arch.detail %}<p>{{ para }}</p>{% endfor %}
+</section>
+
+{# --- B7 + resonant: values for and against --- #}
+<div class="result-grid">
+  <section class="card resonant-card">
+    <h2>Values that lead here</h2>
+    <p class="card-sub">Rank these highly and you'll tend toward {{ arch.name }}.</p>
+    <ul class="resonant-values">
+      {% for name in resonant %}<li>{{ name }}</li>{% endfor %}
+    </ul>
+  </section>
+
+  <section class="card resonant-card anti">
+    <h2>Values that pull away</h2>
+    <p class="card-sub">Rank these highly and you'll land somewhere else.</p>
+    <ul class="resonant-values anti">
+      {% for name in anti_resonant %}<li>{{ name }}</li>{% endfor %}
+    </ul>
+  </section>
+</div>
+
+{# --- A4 + C9: all-types compass and relationships --- #}
+<section class="card compass-map-card">
+  <h2>Where it sits among all ten</h2>
+  <p class="card-sub">
+    Neighbours on the circle share compatible motivations; the type directly
+    across pursues the opposite of what you do.
+  </p>
+  <svg class="compass-map" viewBox="0 0 {{ circle.size }} {{ circle.size }}"
+       role="img" aria-label="All ten types on the circumplex">
+    <circle class="map-ring" cx="{{ circle.center }}" cy="{{ circle.center }}" r="{{ circle.r }}"></circle>
+    {% for d in circle.dots %}
+    <g class="{{ 'map-dot-on' if d.highlight else 'map-dot' }}">
+      <text x="{{ d.x }}" y="{{ d.y }}" text-anchor="middle" dominant-baseline="central"
+            font-size="{{ 22 if d.highlight else 15 }}">{{ d.emoji }}</text>
+    </g>
+    {% endfor %}
+  </svg>
+</section>
+
+{# --- C8: face-off vs opposite --- #}
+<section class="card faceoff-card">
+  <h2>{{ arch.emoji }} {{ arch.name }} vs {{ faceoff.opposite.emoji }} {{ faceoff.opposite.name }}</h2>
+  <p class="card-sub">Your circumplex opposite, point for point.</p>
+  <table class="faceoff">
+    <tr>
+      <th>{{ arch.name }}</th><th></th><th>{{ faceoff.opposite.name }}</th>
+    </tr>
+    <tr>
+      <td>{{ faceoff.self_top.label }} ({{ faceoff.self_top.pct }}%)</td>
+      <td class="faceoff-axis">top drive</td>
+      <td>{{ faceoff.opp_top.label }} ({{ faceoff.opp_top.pct }}%)</td>
+    </tr>
+    <tr>
+      <td>{{ (faceoff.self_axis.change * 100) | round }}% open</td>
+      <td class="faceoff-axis">change</td>
+      <td>{{ (faceoff.opp_axis.change * 100) | round }}% open</td>
+    </tr>
+    <tr>
+      <td>{{ (faceoff.self_axis.focus * 100) | round }}% self-focused</td>
+      <td class="faceoff-axis">focus</td>
+      <td>{{ (faceoff.opp_axis.focus * 100) | round }}% self-focused</td>
+    </tr>
+  </table>
+  <p class="faceoff-link">
+    <a href="{{ url_for('archetype', key=faceoff.opposite.key) }}">Meet {{ faceoff.opposite.name }} →</a>
+  </p>
+</section>
+
+<section class="card method-card">
+  <h2>How the match is made</h2>
+  <p>
+    Your ranked values become a profile across the ten Schwartz motivations,
+    measured against an average selection so the result reflects what's
+    distinctive about your choices. That profile is matched to the closest
+    type's signature.
+    <a href="{{ url_for('methods') }}">Read the full methodology →</a>
+  </p>
+</section>
+
+<p class="redo">
+  <a href="{{ url_for('archetype', key=arch.key) }}">← Back to {{ arch.name }}</a>
+  <span class="redo-sep">·</span>
+  <a href="{{ url_for('index') }}">Take the test</a>
+</p>
+{% endblock %}

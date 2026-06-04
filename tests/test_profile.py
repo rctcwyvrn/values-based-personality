@@ -176,12 +176,39 @@ def test_every_archetype_has_required_fields():
     assert len(keys) == 10
     for a in ARCHETYPES:
         for field in (
-            "name", "emoji", "tagline", "schwartz", "axis_change", "axis_focus",
+            "name", "emoji", "tagline", "portrait", "recognize", "two_truths",
+            "thriving", "empty", "kryptonite", "green_flags", "red_flags",
+            "quick_stats", "schwartz", "axis_change", "axis_focus",
             "big_five_profile", "detail", "strengths", "tensions",
             "opposite", "neighbors",
         ):
             assert field in a, f"{a['key']} missing {field}"
         assert a["emoji"], "emoji present"
+        assert a["portrait"] and a["recognize"], "casual content present"
+        assert a["green_flags"] and a["red_flags"], "flags present"
+
+
+def test_quick_stats_well_formed():
+    for a in ARCHETYPES:
+        assert a["quick_stats"], f"{a['key']} has no quick stats"
+        for s in a["quick_stats"]:
+            assert set(s) == {"label", "level"}
+            assert isinstance(s["level"], int) and 1 <= s["level"] <= 5
+
+
+def test_casual_copy_is_jargon_free():
+    jargon = [
+        "schwartz", "circumplex", "self-transcendence", "self-enhancement",
+        "openness to change", "conservation", "emphasis", "ocean", "cosine",
+    ]
+    for a in ARCHETYPES:
+        casual = (
+            a["portrait"] + a["recognize"] + a["green_flags"] + a["red_flags"]
+            + [a["two_truths"], a["thriving"], a["empty"], a["kryptonite"]]
+        )
+        text = " ".join(casual).lower()
+        hits = [j for j in jargon if j in text]
+        assert not hits, f"{a['key']} casual copy leaks jargon: {hits}"
         assert a["detail"], "detail paragraphs present"
         assert a["strengths"] and a["tensions"]
 
