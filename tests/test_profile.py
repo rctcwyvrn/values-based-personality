@@ -121,9 +121,21 @@ def test_justice_values_classify_as_idealist():
     assert _primary_key(ranked) == "idealist"
 
 
-def test_security_values_classify_as_guardian():
+def test_security_values_classify_as_provider():
+    # pure safety/stability now belongs to the Provider, not the Guardian
     ranked = ["Stability", "Safety", "Order", "Duty", "Reliability"]
+    assert _primary_key(ranked) == "provider"
+
+
+def test_duty_values_classify_as_guardian():
+    # the Guardian is the duty/order/loyalty middle of the conservation arc
+    ranked = ["Order", "Loyalty", "Tradition", "Dependability", "Responsibility"]
     assert _primary_key(ranked) == "guardian"
+
+
+def test_power_values_classify_as_sovereign():
+    ranked = ["Power", "Authority", "Status", "Influence", "Leadership"]
+    assert _primary_key(ranked) == "sovereign"
 
 
 # --- structural guarantees of the full profile ----------------------------
@@ -143,7 +155,7 @@ def test_build_personality_shape():
     assert len(profile["schwartz"]) == 10
     assert len(profile["higher_order"]) == 4
     # classification ranks every archetype
-    assert len(profile["classification"]["ranked"]) == 10
+    assert len(profile["classification"]["ranked"]) == 12
 
 
 def test_compass_angle_in_range():
@@ -172,8 +184,8 @@ def test_empty_ranked_raises():
 
 def test_every_archetype_has_required_fields():
     keys = {a["key"] for a in ARCHETYPES}
-    assert len(ARCHETYPES) == 10
-    assert len(keys) == 10
+    assert len(ARCHETYPES) == 12
+    assert len(keys) == 12
     for a in ARCHETYPES:
         for field in (
             "name", "emoji", "tagline", "portrait", "recognize", "two_truths",

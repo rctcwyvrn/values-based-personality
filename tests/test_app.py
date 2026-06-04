@@ -81,7 +81,7 @@ def test_each_science_page_renders(client, arch):
     assert "Big Five signature" in body
     assert "Where it sits on the two axes" in body
     assert "Values that pull away" in body
-    assert "Where it sits among all ten" in body  # all-types compass
+    assert "Where it sits among all twelve" in body  # all-types compass
     assert "of random value-rankings land here" in body  # rarity stat
     assert "most blended with" in body  # confusable stat
     assert "vs" in body  # faceoff heading
@@ -112,6 +112,28 @@ def test_unknown_type_404(client):
 
 def test_unknown_science_page_404(client):
     assert client.get("/types/not-a-type/science").status_code == 404
+
+
+def test_compass_map_dots_do_not_overlap():
+    import math
+
+    from app import _circle_map
+    dots = _circle_map("explorer")["dots"]
+    assert len(dots) == 12
+    # every glyph is < 24px wide; min-gap spreading must keep centres clear
+    nearest = min(
+        math.hypot(a["x"] - b["x"], a["y"] - b["y"])
+        for i, a in enumerate(dots)
+        for b in dots[i + 1:]
+    )
+    assert nearest > 24, f"compass dots too close: {nearest:.1f}px"
+
+
+def test_spread_angles_enforces_min_gap():
+    from app import _spread_angles
+    spread = sorted(_spread_angles([3.2, 5.8, 32.4, 53.0, 125.4]))
+    gaps = [(spread[i + 1] - spread[i]) for i in range(len(spread) - 1)]
+    assert all(g >= 16 - 1e-6 for g in gaps), gaps
 
 
 def test_result_from_url_links_to_type_page(client):

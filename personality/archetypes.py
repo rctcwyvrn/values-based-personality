@@ -95,7 +95,7 @@ ARCHETYPES = [
             "Restlessness when life gets predictable",
         ],
         "opposite": "guardian",
-        "neighbors": ["creator", "free_spirit"],
+        "neighbors": ["connector", "free_spirit"],
     },
     {
         "key": "creator",
@@ -171,8 +171,8 @@ ARCHETYPES = [
             "Self-criticism or perfectionism can stall finishing",
             "Sensitivity to having creative autonomy overridden",
         ],
-        "opposite": "seeker",
-        "neighbors": ["explorer", "sage"],
+        "opposite": "provider",
+        "neighbors": ["sage", "connector"],
     },
     {
         "key": "sage",
@@ -191,7 +191,7 @@ ARCHETYPES = [
             {"label": "Composure", "level": 5},
         ],
         "portrait": [
-            "You want to actually understand things, not the headline, the "
+            "You want to actually understand things, not just the headline but the "
             "whole picture. While everyone else is busy reacting, you're the "
             "one quietly asking \"okay, but is that really true?\"",
             "You take your time, weigh the sides, and you're hard to stampede. "
@@ -245,8 +245,8 @@ ARCHETYPES = [
             "May seem detached or above the fray",
             "Can underweight feelings, both their own and others'",
         ],
-        "opposite": "achiever",
-        "neighbors": ["creator", "idealist"],
+        "opposite": "provider",
+        "neighbors": ["idealist", "creator"],
     },
     {
         "key": "caregiver",
@@ -266,7 +266,7 @@ ARCHETYPES = [
         ],
         "portrait": [
             "You're the one who notices the person going quiet at the table. "
-            "Other people's wellbeing isn't a side quest for you, it's the "
+            "Other people's wellbeing isn't a side quest for you; it's the "
             "whole map. You show up, you follow through, and people feel safe "
             "around you.",
             "You measure a good day by who you helped. The catch is that your "
@@ -299,7 +299,7 @@ ARCHETYPES = [
             "you've helped."
         ),
         "detail": [
-            "You sit deep in Self-Transcendence, anchored by benevolence, a"
+            "You sit deep in Self-Transcendence, anchored by benevolence, a "
             "devotion to the concrete, near people in your life. A thread of "
             "universalism widens that circle of care beyond your inner ring. "
             "On the change-conservation axis you lean gently toward "
@@ -323,7 +323,7 @@ ARCHETYPES = [
             "Difficulty setting boundaries or saying no",
         ],
         "opposite": "achiever",
-        "neighbors": ["connector", "idealist"],
+        "neighbors": ["seeker", "idealist"],
     },
     {
         "key": "connector",
@@ -395,8 +395,8 @@ ARCHETYPES = [
             "Spreading thin across many relationships",
             "Discomfort with solitude or stillness",
         ],
-        "opposite": "guardian",
-        "neighbors": ["caregiver", "free_spirit"],
+        "opposite": "provider",
+        "neighbors": ["creator", "explorer"],
     },
     {
         "key": "guardian",
@@ -448,7 +448,7 @@ ARCHETYPES = [
             "on."
         ),
         "detail": [
-            "You anchor the Conservation pole of the circle: security,"
+            "You anchor the Conservation pole of the circle: security, "
             "conformity, and tradition together. You value stability, do what "
             "you say you'll do, and honour your commitments and the structures "
             "that hold things together. Where the Explorer runs toward change, "
@@ -456,7 +456,7 @@ ARCHETYPES = [
             "On the focus axis you're balanced but quietly protective: your "
             "diligence is in service of keeping people and promises safe, not "
             "of winning. People rely on you precisely because you're "
-            "predictable in the best sense. The growth edge is flexibility:"
+            "predictable in the best sense. The growth edge is flexibility: "
             "not every rule is worth keeping, and not every change is a threat.",
         ],
         "strengths": [
@@ -471,7 +471,7 @@ ARCHETYPES = [
             "Risk-aversion may close off good opportunities",
         ],
         "opposite": "explorer",
-        "neighbors": ["seeker", "achiever"],
+        "neighbors": ["provider", "seeker"],
     },
     {
         "key": "achiever",
@@ -491,7 +491,7 @@ ARCHETYPES = [
         ],
         "portrait": [
             "You set the bar high and then clear it. Goals don't stress you "
-            "out, they switch you on. You like being good at things, and you "
+            "out; they switch you on. You like being good at things, and you "
             "like making things happen.",
             "You take ownership when others hesitate and you don't flinch at a "
             "target. Just watch the scoreboard trap: your worth isn't the same "
@@ -531,7 +531,7 @@ ARCHETYPES = [
             "follow the process, whichever wins.",
             "This drive makes you effective and dependable under a target. The "
             "classic tension is that the self-enhancement that fuels you sits "
-            "directly opposite self-transcendence on the circle, so the"
+            "directly opposite self-transcendence on the circle, so the "
             "growth work is making sure ambition doesn't crowd out care, and "
             "that worth isn't fully outsourced to the scoreboard.",
         ],
@@ -546,8 +546,8 @@ ARCHETYPES = [
             "May push past relationships or wellbeing to win",
             "Impatience with slower or less driven people",
         ],
-        "opposite": "caregiver",
-        "neighbors": ["guardian", "explorer"],
+        "opposite": "idealist",
+        "neighbors": ["free_spirit", "sovereign"],
     },
     {
         "key": "idealist",
@@ -602,12 +602,12 @@ ARCHETYPES = [
             "away from."
         ),
         "detail": [
-            "You're the purest Self-Transcendence type, led by universalism, a"
+            "You're the purest Self-Transcendence type, led by universalism, a "
             "concern that reaches past your own circle to everyone and "
             "everything. Benevolence keeps it personal as well as principled. "
             "Your reforming instinct leans you toward Openness to Change: the "
             "status quo is rarely good enough.",
-            "At your best you're a conscience: you see injustice others"
+            "At your best you're a conscience: you see injustice others "
             "normalise and you won't let it rest. The cost of caring that "
             "widely is real: the gap between the world as it is and as it "
             "should be can wear you down, and moral clarity can tip into "
@@ -624,8 +624,8 @@ ARCHETYPES = [
             "Moral certainty can become judgement",
             "Carrying the weight of problems too big to fix alone",
         ],
-        "opposite": "achiever",
-        "neighbors": ["sage", "caregiver"],
+        "opposite": "sovereign",
+        "neighbors": ["caregiver", "sage"],
     },
     {
         "key": "seeker",
@@ -678,14 +678,14 @@ ARCHETYPES = [
             "shape."
         ),
         "detail": [
-            "Tradition anchors you on the Conservation side of the circle, but "
-            "not as rule-following, but as reverence for what endures and gives "
+            "Tradition anchors you on the Conservation side of the circle, "
+            "not as rule-following but as reverence for what endures and gives "
             "meaning. Touches of universalism and self-direction make it your "
             "own search rather than an inherited script, and pull you toward "
             "Self-Transcendence in aim.",
             "You bring depth and groundedness; you're rarely rattled by "
             "surface noise because you're oriented to something deeper. The "
-            "tension is staying engaged with the ordinary, practical world,"
+            "tension is staying engaged with the ordinary, practical world, "
             "and holding meaning loosely enough that it stays a living search "
             "rather than a fixed certainty.",
         ],
@@ -700,8 +700,8 @@ ARCHETYPES = [
             "Meaning can harden into rigid certainty",
             "May feel out of step with a fast, secular world",
         ],
-        "opposite": "creator",
-        "neighbors": ["guardian", "idealist"],
+        "opposite": "achiever",
+        "neighbors": ["guardian", "caregiver"],
     },
     {
         "key": "free_spirit",
@@ -721,7 +721,7 @@ ARCHETYPES = [
         ],
         "portrait": [
             "You're here for the good stuff, right now. Play, pleasure, "
-            "spontaneity, not guilty pleasures, just the point. You give "
+            "spontaneity: not guilty pleasures, just the point. You give "
             "everyone around you quiet permission to lighten up.",
             "Your joy is contagious and you're rarely the one sweating the "
             "schedule. The flip side: a little structure goes a long way, and "
@@ -753,15 +753,15 @@ ARCHETYPES = [
             "spontaneity aren't indulgences to you. They're the point."
         ),
         "detail": [
-            "You live where hedonism meets stimulation, the most"
+            "You live where hedonism meets stimulation, the most "
             "present-tense corner of the Openness-to-Change side. You're here "
             "for the experience of being alive: pleasure, play, novelty, the "
             "good moment as it happens. Plans and obligations are useful only "
             "insofar as they don't kill the spark.",
             "Your joy is contagious and you give others permission to "
             "lighten up. Directly opposite you on the circle sits the "
-            "Guardian's world of duty and restraint, which is exactly your"
-            "growth edge: a little structure and follow-through lets the good "
+            "Guardian's world of duty and restraint, which is exactly your "
+            "growth edge: a little structure and follow-through let the good "
             "times actually last instead of fizzling.",
         ],
         "strengths": [
@@ -776,7 +776,163 @@ ARCHETYPES = [
             "Commitments can feel like constraints",
         ],
         "opposite": "guardian",
-        "neighbors": ["explorer", "connector"],
+        "neighbors": ["explorer", "achiever"],
+    },
+    {
+        "key": "sovereign",
+        "name": "The Sovereign",
+        "emoji": "👑",
+        "tagline": "Built to lead, to influence, and to call the shots",
+        "two_truths": "You're the one everyone looks to in a crisis and the one who finds it hardest to ask for help.",
+        "thriving": "You're decisive and commanding, turning a leaderless mess into a plan and a direction within minutes.",
+        "empty": "You're domineering and guarded, mistaking control for respect and treating people like pieces on a board.",
+        "kryptonite": "Being overlooked, sidelined, or told to wait your turn.",
+        "green_flags": ["Takes charge when no one else will", "Says the hard thing out loud", "Fights for the people who follow them"],
+        "red_flags": ["Has to be the one in control", "Keeps score of wins and slights", "Hard to be vulnerable with"],
+        "quick_stats": [
+            {"label": "Command", "level": 5},
+            {"label": "Asking for help", "level": 1},
+            {"label": "Drive", "level": 5},
+        ],
+        "portrait": [
+            "You read a room for who actually holds the power, and you're "
+            "comfortable being that person. You don't wait for permission or "
+            "for your turn; you see the lever and you pull it. Status, "
+            "influence, being the one who decides, that's oxygen to you.",
+            "You'd rather be respected than liked, and you'll make the hard "
+            "call nobody else wants to. The risk is forgetting that power is a "
+            "tool, not a scoreboard, and that the people you lead are people, "
+            "not pieces.",
+        ],
+        "recognize": [
+            "You've ended up running the thing you only meant to join.",
+            "You map the org chart of any room within five minutes.",
+            "\"Who's in charge here?\" is a question you either ask or answer.",
+        ],
+        "schwartz": {"power": 0.7, "achievement": 0.3},
+        "big_five_hint": "very high Extraversion with low Agreeableness",
+        "axis_change": {
+            "pole": "Balanced",
+            "note": "Equally willing to shake things up or hold the line, whichever puts you in a stronger position.",
+        },
+        "axis_focus": {
+            "pole": "Self-Enhancement",
+            "note": "Power and standing drive you: influence, authority, and being the one who decides.",
+        },
+        "big_five_profile": [
+            {"label": "Extraversion", "level": "very high"},
+            {"label": "Conscientiousness", "level": "high"},
+            {"label": "Agreeableness", "level": "lower"},
+        ],
+        "description": (
+            "You're drawn to influence, authority, and the top of the pecking "
+            "order. You lead by instinct and you're comfortable holding the "
+            "power that others shy away from."
+        ),
+        "detail": [
+            "You anchor the Self-Enhancement pole through power: status, "
+            "authority, and control over outcomes, with achievement close "
+            "behind. Where the Achiever wants to be the best at something, you "
+            "want to be the one in charge of it. You read hierarchies clearly "
+            "and you'd rather shape them than submit to them.",
+            "On the change axis you're pragmatic, happy to disrupt or preserve "
+            "depending on what strengthens your hand. That makes you formidable "
+            "and decisive, but power sits directly opposite self-transcendence "
+            "on the circle, so the growth work is keeping influence in service "
+            "of something beyond your own standing, and letting people close "
+            "enough to see you without the armour.",
+        ],
+        "strengths": [
+            "Decisive and comfortable taking command",
+            "Persuasive and hard to intimidate",
+            "Willing to own responsibility and risk",
+            "Protects and advances the people who follow them",
+        ],
+        "tensions": [
+            "Can dominate or steamroll others",
+            "Equates being in control with being safe",
+            "Struggles to show weakness or ask for help",
+        ],
+        "opposite": "idealist",
+        "neighbors": ["achiever", "provider"],
+    },
+    {
+        "key": "provider",
+        "name": "The Provider",
+        "emoji": "🏠",
+        "tagline": "Building a safe, stable foundation that holds",
+        "two_truths": "You're the most prepared person anyone knows and the most reluctant to leave the safe option.",
+        "thriving": "You're steady and prepared, the solid ground others build on, with a plan for the rainy day before it clouds over.",
+        "empty": "You're anxious and defensive, treating every change as a threat and hoarding a security you never let yourself enjoy.",
+        "kryptonite": "Sudden change, open-ended uncertainty, and being asked to bet the foundation.",
+        "green_flags": ["Always has a backup and a buffer", "Steady when money or plans get shaky", "Quietly makes sure no one goes without"],
+        "red_flags": ["Treats every risk as a threat", "Slow to try anything unproven", "Worries out loud about worst cases"],
+        "quick_stats": [
+            {"label": "Preparedness", "level": 5},
+            {"label": "Risk appetite", "level": 1},
+            {"label": "Stability", "level": 5},
+        ],
+        "portrait": [
+            "You sleep better knowing the base is solid. A stocked pantry, "
+            "money in the account, a plan for when things go sideways, that's "
+            "not paranoia, it's peace of mind. You build the kind of stability "
+            "other people get to take for granted.",
+            "You're the one who reads the fine print and keeps the spare. The "
+            "flip side: not every risk is a threat, and a life spent only "
+            "defending the walls can forget to enjoy what's inside them.",
+        ],
+        "recognize": [
+            "You have an emergency fund and an emergency plan.",
+            "\"What's the catch?\" is your honest first reaction.",
+            "A disrupted routine gives you a quiet sense of dread.",
+        ],
+        "schwartz": {"security": 0.8, "conformity": 0.2},
+        "big_five_hint": "high Conscientiousness with lower Openness",
+        "axis_change": {
+            "pole": "Conservation",
+            "note": "Stability and safety come first; you protect the foundation and treat the proven as precious.",
+        },
+        "axis_focus": {
+            "pole": "Balanced",
+            "note": "Not chasing status or applause; your effort goes into securing a solid base for yourself and your people.",
+        },
+        "big_five_profile": [
+            {"label": "Conscientiousness", "level": "very high"},
+            {"label": "Emotional Stability", "level": "moderate"},
+            {"label": "Openness", "level": "lower"},
+        ],
+        "description": (
+            "You build a safe, stable foundation and guard it well. Security, "
+            "preparedness, and a dependable base for the people you're "
+            "responsible for are what you organise your life around."
+        ),
+        "detail": [
+            "You anchor the Conservation side of the circle through security: "
+            "safety, stability, and a well-defended foundation, with a thread "
+            "of conformity that keeps you doing things the proven way. Where "
+            "the Guardian is led by duty and order, you're led by the need for "
+            "a solid base: the savings, the backup, the margin that means a bad "
+            "week doesn't become a disaster.",
+            "On the focus axis you're balanced, neither chasing status nor "
+            "giving yourself away; the point is a stable life, secured. That "
+            "makes you the dependable foundation others build on, but security "
+            "sits opposite openness on the circle, so the growth work is "
+            "remembering that not every change is a threat, and that a "
+            "foundation is meant to be lived on, not just defended.",
+        ],
+        "strengths": [
+            "Prepared for whatever goes wrong",
+            "Level-headed and steady about risk",
+            "Builds lasting stability and security",
+            "Quietly dependable when it counts",
+        ],
+        "tensions": [
+            "Risk-averse to the point of missing out",
+            "Slow to embrace change or the unproven",
+            "Can mistake a safe life for a full one",
+        ],
+        "opposite": "connector",
+        "neighbors": ["sovereign", "guardian"],
     },
 ]
 

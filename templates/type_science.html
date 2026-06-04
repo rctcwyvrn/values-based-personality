@@ -123,13 +123,13 @@
 
 {# --- A4 + C9: all-types compass and relationships --- #}
 <section class="card compass-map-card">
-  <h2>Where it sits among all ten</h2>
+  <h2>Where it sits among all twelve</h2>
   <p class="card-sub">
     Neighbours on the circle share compatible motivations; the type directly
     across pursues the opposite of what you do.
   </p>
   <svg class="compass-map" viewBox="0 0 {{ circle.size }} {{ circle.size }}"
-       role="img" aria-label="All ten types on the circumplex">
+       role="img" aria-label="All twelve types on the circumplex">
     <circle class="map-ring" cx="{{ circle.center }}" cy="{{ circle.center }}" r="{{ circle.r }}"></circle>
     {% for d in circle.dots %}
     <g class="{{ 'map-dot-on' if d.highlight else 'map-dot' }}">

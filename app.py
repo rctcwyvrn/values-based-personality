@@ -109,13 +109,44 @@ def _radar_geometry(schwartz: list[dict], size: int = 320, margin: int = 70) -> 
     }
 
 
+def _spread_angles(angles: list[float], min_gap: float = 16.0) -> list[float]:
+    """Nudge angles (degrees) apart so none are closer than min_gap on the circle.
+
+    The compass angle is a 1-D projection of a 10-D vector, so distinct types
+    can land at nearly the same angle (e.g. Creator ~3 deg, Connector ~6 deg).
+    Iterative pairwise relaxation pushes colliding neighbours apart by half the
+    deficit each, re-sorting until every adjacent gap clears min_gap. Feasible
+    as long as len(angles) * min_gap < 360.
+    """
+    angles = list(angles)
+    n = len(angles)
+    if n < 2 or n * min_gap >= 360:
+        return angles
+    for _ in range(200):
+        order = sorted(range(n), key=lambda i: angles[i])
+        moved = False
+        for k in range(n):
+            i, j = order[k], order[(k + 1) % n]
+            gap = (angles[j] - angles[i]) % 360
+            if gap < min_gap - 1e-9:
+                push = (min_gap - gap) / 2.0
+                angles[i] = (angles[i] - push) % 360
+                angles[j] = (angles[j] + push) % 360
+                moved = True
+        if not moved:
+            break
+    return angles
+
+
 def _circle_map(highlight_key: str, size: int = 300, pad: int = 30) -> dict:
     """Geometry for the all-types mini-compass: a dot per archetype by angle."""
     center = size / 2
     r = center - pad
+    positions = circle_positions()
+    spread = _spread_angles([p["angle"] for p in positions])
     dots = []
-    for pos in circle_positions():
-        angle = math.radians(pos["angle"])
+    for pos, angle_deg in zip(positions, spread):
+        angle = math.radians(angle_deg)
         dots.append(
             {
                 "key": pos["key"],

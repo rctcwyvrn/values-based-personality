@@ -3,7 +3,7 @@
 Rank your top personal values and get a personality reading. A Flask + Jinja
 web app that maps a ranked top-10 from a list of 100 ACT-framework values onto
 the **Schwartz values circumplex** (the geometric engine) and the **Big Five**
-(the descriptive language), then classifies you into one of ten archetypes.
+(the descriptive language), then classifies you into one of twelve archetypes.
 
 ## How it works
 
@@ -59,7 +59,7 @@ Tune worker count with `-e WEB_CONCURRENCY=…` or by editing the `CMD` in the
 |------|---------|
 | `values.py` | The 100 values with Schwartz + Big Five loadings |
 | `personality/dimensions.py` | Framework definitions, baseline, circumplex geometry |
-| `personality/archetypes.py` | The ten archetype prototypes |
+| `personality/archetypes.py` | The twelve archetype prototypes |
 | `personality/profile.py` | Scoring, classification, description |
 | `app.py` / `wsgi.py` | Flask app factory and gunicorn entrypoint |
 | `templates/`, `static/` | Jinja templates, CSS, drag-to-rank JS |
